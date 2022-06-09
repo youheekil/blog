@@ -299,7 +299,7 @@ You can connect databricks notebook with Github for the revision history. The pr
 
 
 ## Reference 
-https://github.com/scoyne2/kafka_spark_streams
-https://blogit.michelin.io/kafka-to-delta-lake-using-apache-spark-streaming-avro/
-https://medium.com/@lorenagongang/sentiment-analysis-on-streaming-twitter-data-using-kafka-spark-structured-streaming-python-part-b27aecca697a
-https://winf-hsos.github.io/databricks-notebooks/big-data-analytics/ss-2020/Word%20Clouds%20with%20Python.html
+* https://github.com/scoyne2/kafka_spark_streams
+* https://blogit.michelin.io/kafka-to-delta-lake-using-apache-spark-streaming-avro/
+* https://medium.com/@lorenagongang/sentiment-analysis-on-streaming-twitter-data-using-kafka-spark-structured-streaming-python-part-b27aecca697a
+* https://winf-hsos.github.io/databricks-notebooks/big-data-analytics/ss-2020/Word%20Clouds%20with%20Python.html
