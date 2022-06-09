@@ -4,6 +4,7 @@ date: 2022-06-06
 draft: false
 author: Youhee
 images: []
+tags: ["Sentiment-Analysis"]
 categories: ["Project", "Sentiment-Analysis"]
 
 lightgallery: true
