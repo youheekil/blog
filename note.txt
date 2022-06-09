@@ -1,0 +1,4 @@
+https://fontawesome.com/icons/star?s=solid
+
+chmod 777 deploy.sh
+./deploy.sh
