@@ -4,7 +4,7 @@ date: 2022-06-06
 draft: false
 author: Youhee
 images: []
-tags: ["Sentiment-Analysis"]
+tags: ["Sentiment-Analysis", "kafka", "spark-streaming" ]
 categories: ["Project", "Sentiment-Analysis"]
 
 lightgallery: true

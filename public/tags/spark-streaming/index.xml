@@ -1,0 +1,27 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>spark-streaming - Tag - YOUHEE</title>
+        <link>http://youheekil.github.io/tags/spark-streaming/</link>
+        <description>spark-streaming - Tag - YOUHEE</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>youhee.kil@gmail.com (Youhee Kil)</managingEditor>
+            <webMaster>youhee.kil@gmail.com (Youhee Kil)</webMaster><lastBuildDate>Wed, 08 Jun 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://youheekil.github.io/tags/spark-streaming/" rel="self" type="application/rss+xml" /><item>
+    <title>[Starbucks Twitter Sentiment Analysis] 1. Instruction</title>
+    <link>http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/</link>
+    <pubDate>Wed, 08 Jun 2022 00:00:00 &#43;0000</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/</guid>
+    <description><![CDATA[Setup with Confluent Kafka, Spark, Delta Lake with Databricks and AWS   Project Final Diagram   Instruction In this post, we will set up environment to perform Starbucks Twitter Sentiment Analysis with Confluent Kafka, Spark, Delta Lake with Databricks and AWS.
+Step 1. Twitter API Credentials As we performed in the previous post, we need to get Twitter API Credentials. After getting it, we save these credential information in .]]></description>
+</item>
+<item>
+    <title>[Starbucks Twitter Sentiment Analysis] 0. Architecture Planning</title>
+    <link>http://youheekil.github.io/project1-0.-starbucks-twitter-sentimental-analysis/</link>
+    <pubDate>Mon, 06 Jun 2022 00:00:00 &#43;0000</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/project1-0.-starbucks-twitter-sentimental-analysis/</guid>
+    <description><![CDATA[Architecture Planning   From Kafka to Delta Lake using Apache Spark Structured Streaming   Image Source: From Kafka to Delta Lake using Apache Spark Structured Streaming
+1. Aim The aim of the Starbucks Twitter Sentimental Analysis project is to build end-to-end twitter data streaming pipeline to analyze brand sentiment analysis.
+ Brand sentiment analysis is, to put it simply, a way of determining the general attitude toward your brand, product, or service.]]></description>
+</item>
+</channel>
+</rss>
