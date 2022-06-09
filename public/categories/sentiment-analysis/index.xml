@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Sentiment Analysis - Category - YOUHEE</title>
+        <link>http://youheekil.github.io/categories/sentiment-analysis/</link>
+        <description>Sentiment Analysis - Category - YOUHEE</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>youhee.kil@gmail.com (Youhee Kil)</managingEditor>
+            <webMaster>youhee.kil@gmail.com (Youhee Kil)</webMaster><lastBuildDate>Sun, 05 Jun 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://youheekil.github.io/categories/sentiment-analysis/" rel="self" type="application/rss+xml" /><item>
+    <title>Sentiment Analysis with NLTK, TextBlob, Spark Streaming</title>
+    <link>http://youheekil.github.io/text-analysis/</link>
+    <pubDate>Sun, 05 Jun 2022 00:00:00 &#43;0000</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/text-analysis/</guid>
+    <description><![CDATA[TextBlob The TextBlob method produces polarity and subjectivity score. The polarity score which falls between [-1.0, 1.0] indicates a sensentivity from the sentence. If the score is below zero (0.0), sensitivity of the sentence is negativity. While the score is above zero (0.0), then the sensitivity of the sentence is positive. The subjectivity score which falls between [0.0, 1.0] identifies whether the sentence is objective or subjectivity. If the score is close to 0.]]></description>
+</item>
+</channel>
+</rss>

@@ -1,0 +1,37 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Data Engineer - Category - YOUHEE</title>
+        <link>http://youheekil.github.io/categories/data-engineer/</link>
+        <description>Data Engineer - Category - YOUHEE</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>youhee.kil@gmail.com (Youhee Kil)</managingEditor>
+            <webMaster>youhee.kil@gmail.com (Youhee Kil)</webMaster><lastBuildDate>Sat, 21 May 2022 10:38:13 &#43;0900</lastBuildDate><atom:link href="http://youheekil.github.io/categories/data-engineer/" rel="self" type="application/rss+xml" /><item>
+    <title>[Kafka] Running Kafka with Docker (python)</title>
+    <link>http://youheekil.github.io/running-kafka-docker/</link>
+    <pubDate>Sat, 21 May 2022 10:38:13 &#43;0900</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/running-kafka-docker/</guid>
+    <description><![CDATA[Kafka with Docker   In this post, we would like to go over how to run Kafka with Docker and Python. Before starting the post, make sure you have installed Docker (Docker hub) on your computer.
+Step 1. Docker Image Setup Okay, first, let&rsquo;s create a directory folder to store docker-compose.yml file. The docker-compose file does not run your code itself.
+1  $ mkdir ~/docker-kafka &amp;&amp; cd docker-kafka   You can pull kafka and zookeeper images by using this docker pull command, more detailed explanation can be found in the following link - kafka and zookeeper from Docker Hub.]]></description>
+</item>
+<item>
+    <title>[Udacity] Data Streaming</title>
+    <link>http://youheekil.github.io/udacity-dataengineer-datastreaming/</link>
+    <pubDate>Thu, 19 May 2022 13:38:13 &#43;0900</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/udacity-dataengineer-datastreaming/</guid>
+    <description><![CDATA[Udacity Program   Kafka (figure)   Technologies used  Apache Kafka, Kafka Connect, KSQL, Faust Stream Processing, Spark Structured Streaming   About The Nanodegree Data Streaming skill was gained to be prepared for the next era of data engineering. Learned how to analyze data in real-time using Apache Kafka and Spark, and build applications to process live insights from data at scale.
+Program Details During the program, we completed two courses with two projects.]]></description>
+</item>
+<item>
+    <title>Data Engineer Roadmap</title>
+    <link>http://youheekil.github.io/data-engineer-roadmap/</link>
+    <pubDate>Mon, 16 May 2022 00:00:00 &#43;0000</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/data-engineer-roadmap/</guid>
+    <description><![CDATA[Data Engineer Roadmap   The roadmap aims to give a complete picture of the modern data engineering landscape and serve as a study guide for aspiring data engineers.
+ Based on the provided Data Engineer Roadmap, I would like to dig into what we need to know to be a data engineer.
+  Data Engineer Roadmap   Section 1. CS fundamentals  Basic terminal usage Data structures &amp; algorithms APIs REST Structured vs unstructured data Linux  CLI Vim Shell scripting Cronjobs   OS  How does the computer work?]]></description>
+</item>
+</channel>
+</rss>

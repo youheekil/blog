@@ -1,0 +1,23 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>python - Tag - YOUHEE</title>
+        <link>http://youheekil.github.io/tags/python/</link>
+        <description>python - Tag - YOUHEE</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>youhee.kil@gmail.com (Youhee Kil)</managingEditor>
+            <webMaster>youhee.kil@gmail.com (Youhee Kil)</webMaster><lastBuildDate>Mon, 23 May 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://youheekil.github.io/tags/python/" rel="self" type="application/rss+xml" /><item>
+    <title>Algorithm Pattern</title>
+    <link>http://youheekil.github.io/algorithm-pattern/</link>
+    <pubDate>Mon, 23 May 2022 00:00:00 &#43;0000</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/algorithm-pattern/</guid>
+    <description><![CDATA[https://www.educative.io/blog/top-data-engineer-interview-questions-and-tips#programming-languages https://www.codinginterview.com/interview-roadmap
+0. Brushing up Python  How to read/write from/to files  ​
+ How to read input from the console  ​
+ How to split strings  ​
+ Is string length a function or a property (answer: it doesn’t matter, but still reflects poorly on you)  ​
+  How to declare and use 2D arrays
+  Process command line arguments
+  Remember to revise topics like:]]></description>
+</item>
+</channel>
+</rss>

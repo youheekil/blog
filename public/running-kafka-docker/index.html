@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>[Kafka] Running Kafka with Docker (python) - YOUHEE</title><meta name="Description" content=""><meta property="og:title" content="[Kafka] Running Kafka with Docker (python)" />
+<meta property="og:description" content="Kafka with Docker   In this post, we would like to go over how to run Kafka with Docker and Python. Before starting the post, make sure you have installed Docker (Docker hub) on your computer.
+Step 1. Docker Image Setup Okay, first, let&rsquo;s create a directory folder to store docker-compose.yml file. The docker-compose file does not run your code itself.
+1  $ mkdir ~/docker-kafka &amp;&amp; cd docker-kafka   You can pull kafka and zookeeper images by using this docker pull command, more detailed explanation can be found in the following link - kafka and zookeeper from Docker Hub." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://youheekil.github.io/running-kafka-docker/" />
+<meta property="og:image" content="http://youheekil.github.io/logo.png"/>
+<meta property="article:published_time" content="2022-05-21T10:38:13+09:00" />
+<meta property="article:modified_time" content="2022-05-21T10:38:13+09:00" /><meta property="og:site_name" content="YOUHEE" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://youheekil.github.io/logo.png"/>
+
+<meta name="twitter:title" content="[Kafka] Running Kafka with Docker (python)"/>
+<meta name="twitter:description" content="Kafka with Docker   In this post, we would like to go over how to run Kafka with Docker and Python. Before starting the post, make sure you have installed Docker (Docker hub) on your computer.
+Step 1. Docker Image Setup Okay, first, let&rsquo;s create a directory folder to store docker-compose.yml file. The docker-compose file does not run your code itself.
+1  $ mkdir ~/docker-kafka &amp;&amp; cd docker-kafka   You can pull kafka and zookeeper images by using this docker pull command, more detailed explanation can be found in the following link - kafka and zookeeper from Docker Hub."/>
+<meta name="application-name" content="YOUHEE">
+<meta name="apple-mobile-web-app-title" content="YOUHEE"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://youheekil.github.io/running-kafka-docker/" /><link rel="prev" href="http://youheekil.github.io/project2-0.-songplz-bot/" /><link rel="next" href="http://youheekil.github.io/project2-1.-songplz-bot/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "[Kafka] Running Kafka with Docker (python)",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/youheekil.github.io\/running-kafka-docker\/"
+        },"genre": "posts","keywords": "kafka, docker","wordcount":  1006 ,
+        "url": "http:\/\/youheekil.github.io\/running-kafka-docker\/","datePublished": "2022-05-21T10:38:13+09:00","dateModified": "2022-05-21T10:38:13+09:00","publisher": {
+            "@type": "Organization",
+            "name": "YOUHEE","logo": "http:\/\/youheekil.github.io\/favicon.ico"},"author": {
+                "@type": "Person",
+                "name": "Youhee"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="YOUHEE"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        data-srcset="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 1.5x, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 2x"
+        data-sizes="auto"
+        alt="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        title="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="YOUHEE"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        data-srcset="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 1.5x, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 2x"
+        data-sizes="auto"
+        alt="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        title="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">[Kafka] Running Kafka with Docker (python)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Youhee</a></span>&nbsp;<span class="post-category">included in <a href="/categories/data-engineer/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Data Engineer</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-05-21">2022-05-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1006 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#step-1-docker-image-setup">Step 1. Docker Image Setup</a></li>
+    <li><a href="#step-2-create-docker-composeyml-file">Step 2. Create docker-compose.yml file</a>
+      <ul>
+        <li><a href="#docker">Docker</a></li>
+        <li><a href="#docker-composeyml-file">Docker-compose.yml file</a></li>
+      </ul>
+    </li>
+    <li><a href="#step-3-run-docker-compose">Step 3. Run docker-compose</a></li>
+    <li><a href="#step-4-run-kafka-">Step 4. Run Kafka !</a>
+      <ul>
+        <li><a href="#option-1-execute-docker-container-bash">[Option 1] Execute docker container (bash)</a></li>
+        <li><a href="#option-2-access-kafka-directly-through-command-line">[Option 2] Access Kafka directly through command line</a></li>
+      </ul>
+    </li>
+    <li><a href="#check-your-environment-status">Check Your Environment Status</a></li>
+    <li><a href="#stopping--cleaning-up-docker-compose">Stopping &amp; Cleaning Up Docker Compose</a></li>
+    <li><a href="#further-more-with-python">Further More with Python</a>
+      <ul>
+        <li><a href="#1-credentialjson">1. credential.json</a></li>
+        <li><a href="#2-producerpy">2. producer.py</a></li>
+        <li><a href="#3-consumerpy">3. consumer.py</a></li>
+        <li><a href="#4-run-producerpy-and-consumerpy-files">4. Run <code>producer.py</code> and <code>consumer.py</code> files</a>
+          <ul>
+            <li><a href="#terminal-1">terminal 1</a></li>
+            <li><a href="#terminal-2">terminal 2</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><figure>
+    <img src="kafka-docker.png"/> <figcaption>
+            <h4>Kafka with Docker</h4>
+        </figcaption>
+</figure>
+
+<p>In this post, we would like to go over how to run Kafka with Docker and Python. Before starting the post, make sure you have installed Docker (Docker hub) on your computer.</p>
+<h2 id="step-1-docker-image-setup">Step 1. Docker Image Setup</h2>
+<p>Okay, first, let&rsquo;s create a directory folder to store docker-compose.yml file.
+The docker-compose file does not run your code itself.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ mkdir ~/docker-kafka <span class="o">&amp;&amp;</span> <span class="nb">cd</span> docker-kafka
+</code></pre></td></tr></table>
+</div>
+</div><p>You can pull kafka and zookeeper images by using this docker pull command, more detailed explanation can be found in the following link - <a href="https://hub.docker.com/r/wurstmeister/kafka" target="_blank" rel="noopener noreffer">kafka</a> and <a href="https://hub.docker.com/r/wurstmeister/zookeeper" target="_blank" rel="noopener noreffer">zookeeper</a> from Docker Hub.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># Kafka</span>
+$ docker pull wurstmeister/kafka
+
+<span class="c1"># Zookeeper</span>
+$ docker pull wurstmeister/zookeeper
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="step-2-create-docker-composeyml-file">Step 2. Create docker-compose.yml file</h2>
+<h3 id="docker">Docker</h3>
+<p>Instead of pulling images separately, you can write docker-compose.yml file to pull those simultaneously. What is docker-compose.yml file? It is basically a config file for Docker Compose. It allows you to deploy, combine, and configure multiple docker containers at the same time. Is there difference between dockerfile and docker-compose? Yes! &ldquo;A Dockerfile is a simple text file that contains the commands a user could call to assemble an image whereas Docker Compose is a tool for defining and running multi-container Docker applications&rdquo; (<a href="https://dockerlabs.collabnix.com/beginners/difference-compose-dockerfile.html" target="_blank" rel="noopener noreffer">dockerlab</a>)</p>
+<h3 id="docker-composeyml-file">Docker-compose.yml file</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="c"># This docker-compose file starts and runs:</span><span class="w">
+</span><span class="w"></span><span class="c"># * A 1-node kafka cluster</span><span class="w">
+</span><span class="w"></span><span class="c"># * A 1-zookeeper ensemble</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;2&#39;</span><span class="w">
+</span><span class="w"></span><span class="nt">services</span><span class="p">:</span><span class="w"> 
+</span><span class="w">  </span><span class="nt">zookeeper</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">wurstmeister/zookeeper</span><span class="w">
+</span><span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">zookeeper</span><span class="w">
+</span><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;2181:2181&#34;</span><span class="w">
+</span><span class="w">  </span><span class="nt">kafka</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">wurstmeister/kafka</span><span class="w">
+</span><span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">kafka</span><span class="w">
+</span><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;9092:9092&#34;</span><span class="w">
+</span><span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">KAFKA_ADVERTISED_HOST_NAME</span><span class="p">:</span><span class="w"> </span><span class="m">127.0.0.1</span><span class="w">
+</span><span class="w">      </span><span class="nt">KAFKA_ZOOKEEPER_CONNECT</span><span class="p">:</span><span class="w"> </span><span class="l">zookeeper:2181</span><span class="w">
+</span><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">/var/run/docker.sock:/var/run/docker.sock</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="step-3-run-docker-compose">Step 3. Run docker-compose</h2>
+<p>Make sure you run the following command where docker-compose.yml file is located at.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ docker-compose up -d
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="step-4-run-kafka-">Step 4. Run Kafka !</h2>
+<h3 id="option-1-execute-docker-container-bash">[Option 1] Execute docker container (bash)</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ docker container <span class="nb">exec</span> -it kafka bash
+</code></pre></td></tr></table>
+</div>
+</div><p><code>bash</code> script will prompt!</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> opt/kafka_2.13-2.8.1/bin
+
+<span class="c1"># topic list</span>
+kafka-topics.sh --list --zookeeper zookeeper:2181
+
+<span class="c1"># create topic </span>
+kafka-console-producer.sh --bootstrap-server kafka:9092 --topic &lt;topic-name&gt;
+
+<span class="c1"># read events</span>
+kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic &lt;topic-name&gt; --from-beginning
+
+<span class="c1"># delete topic </span>
+kafka-topics.sh --zookeeper zookeeper:2181 --delete --topic &lt;topic-name&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="option-2-access-kafka-directly-through-command-line">[Option 2] Access Kafka directly through command line</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># Check topic list</span>
+$ docker <span class="nb">exec</span> -it kafka kafka-topics.sh --bootstrap-server kafka:9092 --list
+
+<span class="c1"># Create topic</span>
+$ docker <span class="nb">exec</span> -it kafka kafka-console-producer.sh --bootstrap-server kafka:9092 --topic &lt;topic-name&gt;
+
+<span class="c1"># Read events</span>
+$ docker <span class="nb">exec</span> -it kafka kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic &lt;topic-name&gt; --from-beginning
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="check-your-environment-status">Check Your Environment Status</h2>
+<p>You may run the following command at any time from a separate terminal instance:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ docker-compose ps
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="stopping--cleaning-up-docker-compose">Stopping &amp; Cleaning Up Docker Compose</h2>
+<p>When you are ready to stop Docker compose you can run the following command</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ docker-compose stop
+</code></pre></td></tr></table>
+</div>
+</div><p>And if you&rsquo;d like to clean up the container to reclaim disk space, as well as the columns containing your data, run the following command:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ docker-compose rm -v
+Are you sure? <span class="o">[</span>yN<span class="o">]</span> y
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="further-more-with-python">Further More with Python</h2>
+<p>So, when you completed connecting kafka and docker, it&rsquo;s time to actually get real-time tweets from twitter through kafka.</p>
+<blockquote>
+<p>Imagine, you own a small company which produces a service to users through own online platform. Then, there should be a <code>source system</code> like clickstream and a <code>target system</code> like own online platform. Data integration between the source system and target system woudln&rsquo;t be that complicated. But, once the size of your company grows, the company would face lots of struggles when the company has more source systems and target systems with all different data sources. That&rsquo;s the when the <code>Kafka</code> comes in. <code>Kafka</code> is a platform to get produced data from the source systems and the target systems read a streaming data from Kafka.</p>
+</blockquote>
+<figure>
+    <img src="kafka_diagram.png"/> <figcaption>
+            <h4>Kafka Diagram</h4>
+        </figcaption>
+</figure>
+
+<p>The image is originally from <a href="https://medium.com/@stephane.maarek/the-kafka-api-battle-producer-vs-consumer-vs-kafka-connect-vs-kafka-streams-vs-ksql-ef584274c1e" target="_blank" rel="noopener noreffer">a post</a> explaining about Kakfa. I recommend the post !</p>
+<p><strong>In this post, we will create three files under <code>src</code> folder.</strong></p>
+<h3 id="1-credentialjson">1. credential.json</h3>
+<ul>
+<li>Get Twitter API Credentials thorugh the <a href="https://developer.twitter.com/en/docs/twitter-api/getting-started/getting-access-to-the-twitter-api" target="_blank" rel="noopener noreffer">link - TwitterAPI for Developer</a></li>
+</ul>
+<h3 id="2-producerpy">2. producer.py</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#src/producer.py</span>
+
+<span class="n">BROKER_URL</span> <span class="o">=</span> <span class="s2">&#34;localhost:9092&#34;</span>
+<span class="n">TOPIC_NAME</span> <span class="o">=</span> <span class="s2">&#34;&lt;your topic_name&gt;&#34;</span>
+
+<span class="c1">### twitter</span>
+<span class="kn">import</span> <span class="nn">tweepy</span>
+<span class="kn">from</span> <span class="nn">tweepy.auth</span> <span class="kn">import</span> <span class="n">OAuthHandler</span>
+<span class="kn">from</span> <span class="nn">tweepy</span> <span class="kn">import</span> <span class="n">Stream</span>
+<span class="kn">from</span> <span class="nn">tweepy.streaming</span> <span class="kn">import</span> <span class="n">StreamListener</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span> 
+
+
+<span class="c1">### logging </span>
+<span class="n">FORMAT</span> <span class="o">=</span> <span class="s2">&#34;</span><span class="si">%(asctime)s</span><span class="s2"> | </span><span class="si">%(name)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&#34;</span>
+<span class="n">LOG_FILEPATH</span> <span class="o">=</span> <span class="s2">&#34;&lt;path-to-your-log-file&gt;&#34;</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span>
+    <span class="n">filename</span><span class="o">=</span><span class="n">LOG_FILEPATH</span><span class="p">,</span>
+    <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
+    <span class="n">filemode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span>
+    <span class="n">format</span><span class="o">=</span><span class="n">FORMAT</span><span class="p">)</span>
+
+<span class="c1">### Authenticate to Twitter</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;src/credential.json&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">credential</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="n">CONSUMER_KEY</span> <span class="o">=</span> <span class="n">credential</span><span class="p">[</span><span class="s1">&#39;twitter_api_key&#39;</span><span class="p">]</span>
+<span class="n">CONSUMER_SECRET</span> <span class="o">=</span> <span class="n">credential</span><span class="p">[</span><span class="s1">&#39;twitter_api_secret_key&#39;</span><span class="p">]</span>
+<span class="n">ACCESS_TOKEN</span> <span class="o">=</span> <span class="n">credential</span><span class="p">[</span><span class="s1">&#39;twitter_access_token&#39;</span><span class="p">]</span>
+<span class="n">ACCESS_TOKEN_SECRET</span> <span class="o">=</span> <span class="n">credential</span><span class="p">[</span><span class="s1">&#39;twitter_access_token_secret&#39;</span><span class="p">]</span>
+<span class="n">BEARER_TOKEN</span> <span class="o">=</span> <span class="n">credential</span><span class="p">[</span><span class="s1">&#39;bearer_token&#39;</span><span class="p">]</span>
+
+
+
+<span class="kn">from</span> <span class="nn">tweepy.streaming</span> <span class="kn">import</span> <span class="n">StreamListener</span>
+<span class="kn">from</span> <span class="nn">tweepy</span> <span class="kn">import</span> <span class="n">OAuthHandler</span>
+<span class="kn">from</span> <span class="nn">tweepy</span> <span class="kn">import</span> <span class="n">Stream</span>
+<span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaProducer</span>
+<span class="n">producer</span> <span class="o">=</span> <span class="n">KafkaProducer</span><span class="p">(</span><span class="n">bootstrap_servers</span><span class="o">=</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">,</span>
+    <span class="n">value_serializer</span><span class="o">=</span><span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span> <span class="c1">#Same port as your Kafka server</span>
+
+
+<span class="k">class</span> <span class="nc">twitterAuth</span><span class="p">():</span>
+    <span class="s2">&#34;&#34;&#34;SET UP TWITTER AUTHENTICATION&#34;&#34;&#34;</span>
+
+    <span class="k">def</span> <span class="nf">authenticateTwitterApp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">auth</span> <span class="o">=</span> <span class="n">OAuthHandler</span><span class="p">(</span><span class="n">consumer_key</span><span class="o">=</span><span class="n">CONSUMER_KEY</span><span class="p">,</span> <span class="n">consumer_secret</span><span class="o">=</span><span class="n">CONSUMER_SECRET</span><span class="p">)</span>
+        <span class="n">auth</span><span class="o">.</span><span class="n">set_access_token</span><span class="p">(</span><span class="n">ACCESS_TOKEN</span><span class="p">,</span> <span class="n">ACCESS_TOKEN_SECRET</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">auth</span>
+
+
+
+<span class="k">class</span> <span class="nc">TwitterStreamer</span><span class="p">():</span>
+
+    <span class="s2">&#34;&#34;&#34;SET UP STREAMER&#34;&#34;&#34;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">twitterAuth</span> <span class="o">=</span> <span class="n">twitterAuth</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">stream_tweets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="n">listener</span> <span class="o">=</span> <span class="n">ListenerTS</span><span class="p">()</span> 
+            <span class="n">auth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">twitterAuth</span><span class="o">.</span><span class="n">authenticateTwitterApp</span><span class="p">()</span>
+            <span class="n">stream</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">listener</span><span class="p">)</span>
+            <span class="n">stream</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">track</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;Starbucks&#34;</span><span class="p">],</span> <span class="n">stall_warnings</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">languages</span><span class="o">=</span> <span class="p">[</span><span class="s2">&#34;en&#34;</span><span class="p">])</span>
+
+
+<span class="k">class</span> <span class="nc">ListenerTS</span><span class="p">(</span><span class="n">StreamListener</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">on_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="n">tweet</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">status</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> 
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">status</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> 
+            <span class="s1">&#39;user_location&#39;</span><span class="p">:</span><span class="n">status</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">location</span><span class="p">,</span> 
+            <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="n">status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> 
+            <span class="s1">&#39;fav&#39;</span><span class="p">:</span> <span class="n">status</span><span class="o">.</span><span class="n">favorite_count</span><span class="p">,</span> 
+            <span class="s1">&#39;tweet_date&#39;</span><span class="p">:</span> <span class="n">status</span><span class="o">.</span><span class="n">created_at</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&#34;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&#34;</span><span class="p">),</span> 
+            <span class="s1">&#39;tweet_location&#39;</span><span class="p">:</span> <span class="n">status</span><span class="o">.</span><span class="n">place</span><span class="o">.</span><span class="n">full_name</span> <span class="k">if</span> <span class="n">status</span><span class="o">.</span><span class="n">place</span> <span class="k">else</span> <span class="bp">None</span>
+        <span class="p">},</span> <span class="n">default</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>  
+
+        <span class="n">producer</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">topic_name</span><span class="p">,</span> <span class="n">tweet</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+    <span class="n">TS</span> <span class="o">=</span> <span class="n">TwitterStreamer</span><span class="p">()</span>
+    <span class="n">TS</span><span class="o">.</span><span class="n">stream_tweets</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3-consumerpy">3. consumer.py</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">kafka</span> <span class="kn">import</span> <span class="n">KafkaConsumer</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">topic_name</span> <span class="o">=</span> <span class="s2">&#34;&lt;your_topic_name&gt;&#34;</span>
+
+<span class="n">consumer</span> <span class="o">=</span> <span class="n">KafkaConsumer</span><span class="p">(</span>
+    <span class="n">topic_name</span><span class="p">,</span>
+     <span class="n">bootstrap_servers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;localhost:9092&#39;</span><span class="p">],</span>
+     <span class="n">auto_offset_reset</span><span class="o">=</span><span class="s1">&#39;latest&#39;</span><span class="p">,</span>
+     <span class="n">enable_auto_commit</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+     <span class="n">auto_commit_interval_ms</span> <span class="o">=</span>  <span class="mi">5000</span><span class="p">,</span>
+     <span class="n">fetch_max_bytes</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
+     <span class="n">max_poll_records</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+
+     <span class="n">value_deserializer</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)))</span>
+
+<span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">consumer</span><span class="p">:</span>
+ <span class="n">tweets</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+ <span class="k">print</span><span class="p">(</span><span class="n">tweets</span><span class="p">)</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4-run-producerpy-and-consumerpy-files">4. Run <code>producer.py</code> and <code>consumer.py</code> files</h3>
+<p>Open two different terminals.</p>
+<h4 id="terminal-1">terminal 1</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">python src/consumer.py
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="terminal-2">terminal 2</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">python src/producer.py
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>The source code can be checked <a href="https://github.com/youheekil/Twitter-Streaming-with-Apache-Kafka-Docker-and-Python" target="_blank" rel="noopener noreffer">here in github</a></strong></p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li>image
+<a href="https://medium.com/@stephane.maarek/the-kafka-api-battle-producer-vs-consumer-vs-kafka-connect-vs-kafka-streams-vs-ksql-ef584274c1e">https://medium.com/@stephane.maarek/the-kafka-api-battle-producer-vs-consumer-vs-kafka-connect-vs-kafka-streams-vs-ksql-ef584274c1e</a></li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-05-21</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/running-kafka-docker/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://youheekil.github.io/running-kafka-docker/" data-title="[Kafka] Running Kafka with Docker (python)" data-hashtags="kafka,docker"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://youheekil.github.io/running-kafka-docker/" data-hashtag="kafka"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://youheekil.github.io/running-kafka-docker/" data-title="[Kafka] Running Kafka with Docker (python)"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://youheekil.github.io/running-kafka-docker/" data-title="[Kafka] Running Kafka with Docker (python)"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://youheekil.github.io/running-kafka-docker/" data-title="[Kafka] Running Kafka with Docker (python)"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/kafka/">kafka</a>,&nbsp;<a href="/tags/docker/">docker</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/project2-0.-songplz-bot/" class="prev" rel="prev" title="[SongPlz-Bot] 0. Slack Serverless Song Recommendataion Chatbot (SongPlz) - Architecture Planning"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>[SongPlz-Bot] 0. Slack Serverless Song Recommendataion Chatbot (SongPlz) - Architecture Planning</a>
+            <a href="/project2-1.-songplz-bot/" class="next" rel="next" title="[SongPlz-Bot] 1. Slack and Spotify API">[SongPlz-Bot] 1. Slack and Spotify API<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.79.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Youhee Kil</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/twemoji/twemoji.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/index.umd.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"YOUHEE","id-2":"YOUHEE"},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"},"twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

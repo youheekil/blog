@@ -1,0 +1,18 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>mlops - Tag - YOUHEE</title>
+        <link>http://youheekil.github.io/tags/mlops/</link>
+        <description>mlops - Tag - YOUHEE</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>youhee.kil@gmail.com (Youhee Kil)</managingEditor>
+            <webMaster>youhee.kil@gmail.com (Youhee Kil)</webMaster><lastBuildDate>Thu, 19 May 2022 13:38:13 &#43;0900</lastBuildDate><atom:link href="http://youheekil.github.io/tags/mlops/" rel="self" type="application/rss+xml" /><item>
+    <title>[Udacity] MLOps</title>
+    <link>http://youheekil.github.io/udacity-mlops/</link>
+    <pubDate>Thu, 19 May 2022 13:38:13 &#43;0900</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/udacity-mlops/</guid>
+    <description><![CDATA[Udacity Program   MLOps   I participated Machine Learning DevOps Engineer program in Udacity (Certification).
+The program was extraordinary great, providing handful hands-on projects with the detailed and accurate human feedback. MLOps was whole different world and opened my eyes to the world of DevOps and machine learning in production level.
+The program is consisted of four projects, and each project covered different technology skills and tools. The most important thing the program emphasized was clean code principes, such as refactoring, handling errors, unit-testing, logging, and addressing.]]></description>
+</item>
+</channel>
+</rss>

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Sentiment Analysis with NLTK, TextBlob, Spark Streaming - YOUHEE</title><meta name="Description" content=""><meta property="og:title" content="Sentiment Analysis with NLTK, TextBlob, Spark Streaming" />
+<meta property="og:description" content="TextBlob The TextBlob method produces polarity and subjectivity score. The polarity score which falls between [-1.0, 1.0] indicates a sensentivity from the sentence. If the score is below zero (0.0), sensitivity of the sentence is negativity. While the score is above zero (0.0), then the sensitivity of the sentence is positive. The subjectivity score which falls between [0.0, 1.0] identifies whether the sentence is objective or subjectivity. If the score is close to 0." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://youheekil.github.io/text-analysis/" />
+<meta property="og:image" content="http://youheekil.github.io/logo.png"/>
+<meta property="article:published_time" content="2022-06-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-06-05T00:00:00+00:00" /><meta property="og:site_name" content="YOUHEE" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://youheekil.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Sentiment Analysis with NLTK, TextBlob, Spark Streaming"/>
+<meta name="twitter:description" content="TextBlob The TextBlob method produces polarity and subjectivity score. The polarity score which falls between [-1.0, 1.0] indicates a sensentivity from the sentence. If the score is below zero (0.0), sensitivity of the sentence is negativity. While the score is above zero (0.0), then the sensitivity of the sentence is positive. The subjectivity score which falls between [0.0, 1.0] identifies whether the sentence is objective or subjectivity. If the score is close to 0."/>
+<meta name="application-name" content="YOUHEE">
+<meta name="apple-mobile-web-app-title" content="YOUHEE"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://youheekil.github.io/text-analysis/" /><link rel="prev" href="http://youheekil.github.io/project2-3.-etl-steps/" /><link rel="next" href="http://youheekil.github.io/project1-0.-starbucks-twitter-sentimental-analysis/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Sentiment Analysis with NLTK, TextBlob, Spark Streaming",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/youheekil.github.io\/text-analysis\/"
+        },"genre": "posts","wordcount":  553 ,
+        "url": "http:\/\/youheekil.github.io\/text-analysis\/","datePublished": "2022-06-05T00:00:00+00:00","dateModified": "2022-06-05T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "YOUHEE","logo": "http:\/\/youheekil.github.io\/favicon.ico"},"author": {
+                "@type": "Person",
+                "name": "Youhee"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="YOUHEE"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        data-srcset="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 1.5x, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 2x"
+        data-sizes="auto"
+        alt="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        title="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="YOUHEE"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        data-srcset="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 1.5x, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 2x"
+        data-sizes="auto"
+        alt="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        title="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Sentiment Analysis with NLTK, TextBlob, Spark Streaming</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Youhee</a></span>&nbsp;<span class="post-category">included in <a href="/categories/sentiment-analysis/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Sentiment Analysis</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-06-05">2022-06-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;553 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#textblob">TextBlob</a></li>
+    <li><a href="#pysparksql">pyspark.sql</a>
+      <ul>
+        <li><a href="#1-create-a-sparksession">1. Create a SparkSession</a></li>
+        <li><a href="#2-create-a-spark-dataframe-by-reading-a-csv-file">2. Create a spark dataframe by reading a csv file</a></li>
+        <li><a href="#3-select">3. Select</a></li>
+        <li><a href="#4-filter">4. filter</a></li>
+        <li><a href="#5-withcolumn">5. withColumn</a></li>
+        <li><a href="#6-groupby">6. GroupBy</a></li>
+        <li><a href="#orderby">orderby</a></li>
+        <li><a href="#lit">lit</a></li>
+        <li><a href="#when">when</a></li>
+      </ul>
+    </li>
+    <li><a href="#pysparksqlfunctions">pyspark.sql.functions</a>
+      <ul>
+        <li><a href="#get_json_object">get_json_object</a></li>
+        <li><a href="#udfs---user-defined-functions">UDFs - User-Defined Functions</a></li>
+      </ul>
+    </li>
+    <li><a href="#pysparkstreaming">pyspark.streaming</a></li>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="textblob">TextBlob</h2>
+<p>The <code>TextBlob</code> method produces <code>polarity</code> and <code>subjectivity</code> score. The <code>polarity</code> score which falls between [-1.0, 1.0] indicates a sensentivity from the sentence. If the score is below zero (0.0), sensitivity of the sentence is negativity. While the score is above zero (0.0), then the sensitivity of the sentence is positive. The <code>subjectivity</code> score which falls between [0.0, 1.0] identifies whether the sentence is objective or subjectivity. If the score is close to 0.0, the sentence tends to be more objective. On the other hand, if the score is close to 1.0, the sentence tends to be more subjective.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># import libraries</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="kn">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">textblob</span> <span class="kn">import</span> <span class="n">TextBlob</span> 
+
+
+<span class="n">simple_sentence</span> <span class="o">=</span> <span class="s2">&#34;Business Process Management systems (BPMS) are a rich source of events that document the execution of processes and activities within these systems.&#34;</span>
+
+<span class="c1"># singularize</span>
+<span class="n">blob</span> <span class="o">=</span> <span class="n">TextBlob</span><span class="p">(</span><span class="n">simple_sentence</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+
+<span class="c1"># model </span>
+<span class="n">TextBlob</span><span class="p">(</span><span class="n">simple_sentence</span><span class="p">)</span><span class="o">.</span><span class="n">sentiment</span>
+
+<span class="c1"># words</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;words: {}&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">blob</span><span class="o">.</span><span class="n">words</span><span class="p">))</span>
+
+<span class="c1"># sentiment </span>
+<span class="k">print</span><span class="p">(</span><span class="n">TextBlob</span><span class="p">(</span><span class="n">simple_sentence</span><span class="p">)</span><span class="o">.</span><span class="n">polarity</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="pysparksql">pyspark.sql</h2>
+<h3 id="1-create-a-sparksession">1. Create a SparkSession</h3>
+<p>First, we need to create a SparkSession which serves as an entry point to Spark SQL.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python">
+<span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span> 
+
+<span class="n">sc</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+<span class="n">sc</span><span class="o">.</span><span class="n">SparkContext</span><span class="o">.</span><span class="n">setLogLevel</span><span class="p">(</span><span class="s2">&#34;WARN&#34;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">sc</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2-create-a-spark-dataframe-by-reading-a-csv-file">2. Create a spark dataframe by reading a csv file</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&#34;header&#34;</span><span class="p">,</span> <span class="s2">&#34;true&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="o">&lt;</span><span class="n">path</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">the</span><span class="o">-</span><span class="n">csvfile</span><span class="o">&gt;</span><span class="p">)</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3-select">3. Select</h3>
+<p>The <code>select</code> function helps to create a subset of the data</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&#34;column1&#34;</span><span class="p">,</span> <span class="s2">&#34;column2&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="4-filter">4. filter</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">functions</span> <span class="k">as</span> <span class="n">F</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;column1&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&#34;condition1&#34;</span><span class="p">)</span> <span class="o">&amp;</span>
+    <span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;column2&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">)</span> 
+<span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="5-withcolumn">5. withColumn</h3>
+<p>The <code>withColumn</code> function is very useful, it can be used to manipulate columns or create new columns.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s1">&#39;new_column&#39;</span><span class="p">,</span> <span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;column2&#39;</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;new_column&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="6-groupby">6. GroupBy</h3>
+<p>The <code>groupby</code> function is also very useful for data analysis which does grouping data points (rows).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;column1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+    <span class="n">F</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="s1">&#39;new_column&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;column3&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The <code>alias</code> function does assigning a new name to the aggregated column</p>
+<h3 id="orderby">orderby</h3>
+<p>The <code>orderby</code> function is used for sorting the values.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&#34;column1&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+    <span class="n">F</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="s2">&#34;new_column&#34;</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&#34;column3&#34;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span>
+    <span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;column3&#34;</span><span class="p">),</span> <span class="n">descending</span><span class="o">=</span><span class="bp">False</span>
+<span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="lit">lit</h3>
+<p>The <code>lit</code> function is to create a column by assigning a literal or constant value.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">new_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;Type&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;h&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+    <span class="s1">&#39;column1&#39;</span><span class="p">,</span> <span class="s1">&#39;column2&#39;</span><span class="p">,</span> <span class="s1">&#39;column3&#39;</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s1">&#39;is_true&#39;</span><span class="p">,</span> <span class="n">F</span><span class="o">.</span><span class="n">lit</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="c1"># assign &#39;is_true&#39; column to 1(true)</span>
+<span class="n">new_df</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="when">when</h3>
+<p>The <code>when</code> function evaluates the given conditions and returns values accordingly.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">when</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;column1&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;condition1&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>\
+            <span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>\
+            <span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;is_true&#39;</span><span class="p">))</span>\
+            <span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="pysparksqlfunctions">pyspark.sql.functions</h2>
+<h3 id="get_json_object">get_json_object</h3>
+<p>The function <code>get_json_object()</code> is used to extract the JSON string based on path from the JSON column</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">get_json_object</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;id&#34;</span><span class="p">),</span><span class="n">get_json_object</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;value&#34;</span><span class="p">),</span><span class="s2">&#34;$.ZipCodeType&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&#34;ZipCodeType&#34;</span><span class="p">))</span> \
+    <span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">truncate</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="o">//+---+-----------+</span>
+<span class="o">//|</span><span class="nb">id</span> <span class="o">|</span><span class="n">ZipCodeType</span><span class="o">|</span>
+<span class="o">//+---+-----------+</span>
+<span class="o">//|</span><span class="mi">1</span>  <span class="o">|</span><span class="n">STANDARD</span>   <span class="o">|</span>
+<span class="o">//+---+-----------+</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="udfs---user-defined-functions">UDFs - User-Defined Functions</h3>
+<p>User-Defined Functions (UDFs) are user-programmable routines that act on one row.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">textblob</span> <span class="kn">import</span> <span class="n">TextBlob</span>
+
+<span class="c1"># define get_sentiment function </span>
+<span class="k">def</span> <span class="nf">get_sentiment</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">tweet</span> <span class="o">=</span> <span class="n">TextBlob</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tweet</span><span class="o">.</span><span class="n">sentiment</span><span class="o">.</span><span class="n">polarity</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+
+<span class="c1"># define your function </span>
+<span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">UserDefinedFunction</span>
+<span class="n">getSentiment</span> <span class="o">=</span> <span class="n">UserDefinedFunction</span><span class="p">(</span><span class="n">get_sentiment</span><span class="p">,</span> <span class="n">StringType</span><span class="p">())</span>
+
+<span class="c1">## apply the UDF using withColumn</span>
+<span class="n">df</span><span class="o">.</span><span class="n">selectExpr</span><span class="p">(</span><span class="s2">&#34;cast(data as string)&#34;</span><span class="p">)</span>\
+    <span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s1">&#39;tweet&#39;</span><span class="p">,</span> <span class="n">get_json_object</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">),</span><span class="s2">&#34;$[0].tweet&#34;</span><span class="p">))</span>\
+    <span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s1">&#39;sentiment&#39;</span><span class="p">,</span> <span class="n">getSentiment</span><span class="p">(</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;tweet&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">FloatType</span><span class="p">()))</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="pysparkstreaming">pyspark.streaming</h2>
+<ul>
+<li>Return a new DStream by applying incremental <em>reduceByKey</em> over a sliding window.</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">DStream</span><span class="o">.</span><span class="n">reduceByKeyAndWindow</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">invFun</span><span class="p">,</span> <span class="n">windowDuration</span><span class="p">,</span> <span class="n">slideDuration</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">numPartitions</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">filterFunc</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="reference">Reference</h2>
+<p><a href="https://towardsdatascience.com/7-must-know-pyspark-functions-d514ca9376b9">https://towardsdatascience.com/7-must-know-pyspark-functions-d514ca9376b9</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-06-05</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/text-analysis/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://youheekil.github.io/text-analysis/" data-title="Sentiment Analysis with NLTK, TextBlob, Spark Streaming"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://youheekil.github.io/text-analysis/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://youheekil.github.io/text-analysis/" data-title="Sentiment Analysis with NLTK, TextBlob, Spark Streaming"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://youheekil.github.io/text-analysis/" data-title="Sentiment Analysis with NLTK, TextBlob, Spark Streaming"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://youheekil.github.io/text-analysis/" data-title="Sentiment Analysis with NLTK, TextBlob, Spark Streaming"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/project2-3.-etl-steps/" class="prev" rel="prev" title="[SongPlz-Bot] 3. ETL Steps"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>[SongPlz-Bot] 3. ETL Steps</a>
+            <a href="/project1-0.-starbucks-twitter-sentimental-analysis/" class="next" rel="next" title="[Starbucks Twitter Sentiment Analysis] 0. Architecture Planning">[Starbucks Twitter Sentiment Analysis] 0. Architecture Planning<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.79.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Youhee Kil</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/twemoji/twemoji.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/index.umd.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"YOUHEE","id-2":"YOUHEE"},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"},"twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

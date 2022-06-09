@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>[Starbucks Twitter Sentiment Analysis] 1. Environment Setup - YOUHEE</title><meta name="Description" content=""><meta property="og:title" content="[Starbucks Twitter Sentiment Analysis] 1. Environment Setup" />
+<meta property="og:description" content="Setup with Confluent Kafka, Spark, Delta Lake with Databricks and AWS   Project Final Diagram   Instruction In this post, we will set up environment to perform Starbucks Twitter Sentiment Analysis with Confluent Kafka, Spark, Delta Lake with Databricks and AWS.
+Step 1. Twitter API Credentials As we performed in the previous post, we need to get Twitter API Credentials. After getting it, we save these credential information in ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/" />
+<meta property="og:image" content="http://youheekil.github.io/logo.png"/>
+<meta property="article:published_time" content="2022-06-08T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-06-08T00:00:00+00:00" /><meta property="og:site_name" content="YOUHEE" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://youheekil.github.io/logo.png"/>
+
+<meta name="twitter:title" content="[Starbucks Twitter Sentiment Analysis] 1. Environment Setup"/>
+<meta name="twitter:description" content="Setup with Confluent Kafka, Spark, Delta Lake with Databricks and AWS   Project Final Diagram   Instruction In this post, we will set up environment to perform Starbucks Twitter Sentiment Analysis with Confluent Kafka, Spark, Delta Lake with Databricks and AWS.
+Step 1. Twitter API Credentials As we performed in the previous post, we need to get Twitter API Credentials. After getting it, we save these credential information in ."/>
+<meta name="application-name" content="YOUHEE">
+<meta name="apple-mobile-web-app-title" content="YOUHEE"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/" /><link rel="prev" href="http://youheekil.github.io/project1-0.-starbucks-twitter-sentimental-analysis/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "[Starbucks Twitter Sentiment Analysis] 1. Environment Setup",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/youheekil.github.io\/project1-1.-starbucks-twitter-sentimental-analysis\/"
+        },"genre": "posts","wordcount":  1326 ,
+        "url": "http:\/\/youheekil.github.io\/project1-1.-starbucks-twitter-sentimental-analysis\/","datePublished": "2022-06-08T00:00:00+00:00","dateModified": "2022-06-08T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "YOUHEE","logo": "http:\/\/youheekil.github.io\/favicon.ico"},"author": {
+                "@type": "Person",
+                "name": "Youhee"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="YOUHEE"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        data-srcset="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 1.5x, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 2x"
+        data-sizes="auto"
+        alt="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        title="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="YOUHEE"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        data-srcset="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 1.5x, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 2x"
+        data-sizes="auto"
+        alt="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        title="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">[Starbucks Twitter Sentiment Analysis] 1. Environment Setup</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Youhee</a></span>&nbsp;<span class="post-category">included in <a href="/categories/project/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Project</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-06-08">2022-06-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1326 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#instruction">Instruction</a></li>
+    <li><a href="#step-1-twitter-api-credentials">Step 1. Twitter API Credentials</a></li>
+    <li><a href="#step-2-confluent-cloud">Step 2. Confluent Cloud</a>
+      <ul>
+        <li><a href="#2-1-create-a-confluent-cloud-account-and-kafka-cluster">2-1. Create a Confluent Cloud account and Kafka cluster</a></li>
+        <li><a href="#2-2-create-a-kafka-topic-named-tweet_data-with-2-partitions">2-2. Create a Kafka Topic named <code>tweet_data</code> with 2 partitions.</a></li>
+      </ul>
+    </li>
+    <li><a href="#step-3-confluent-cloud-api-credentials">Step 3. Confluent Cloud API credentials.</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#api-keys">API keys</a></li>
+            <li><a href="#host-bootstrap-server">HOST: Bootstrap server</a></li>
+            <li><a href="#save-those-at-homeconfluentpythonconfig">Save those at <code>$HOME/.confluent/python.config</code></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#step-4-create-a-databricks-cluster">Step 4. Create a Databricks Cluster</a></li>
+    <li><a href="#step-4-1-install-dependencies">Step 4-1. Install Dependencies</a></li>
+    <li><a href="#step-5-source-code-for-twitter-data-ingestion">Step 5. Source Code for twitter data ingestion</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#still-some-modifications-are-needed">Still some modifications are needed</a></li>
+            <li><a href="#procedure-to-run-the-kafka-twitter-data-ingestion">Procedure to run the kafka twitter data ingestion</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#step-6-spark-streaming-in-databricks---streaming-data-ingestion">Step 6. Spark Streaming in Databricks - Streaming Data Ingestion</a></li>
+    <li><a href="#step-7-spark-streaming-in-databricks---streaming-data-transformation">Step 7. Spark Streaming in Databricks - Streaming Data Transformation</a></li>
+    <li><a href="#step-8-connect-databricks-and-delta-lake">Step 8. Connect DataBricks and Delta Lake</a></li>
+    <li><a href="#step-9-spark-nlp">Step 9. Spark NLP</a>
+      <ul>
+        <li><a href="#create-a-preprocessing-stages-pipeline">Create a Preprocessing Stages Pipeline</a></li>
+      </ul>
+    </li>
+    <li><a href="#option-integrate-databricks-notebook-with-github">[Option] integrate databricks notebook with Github</a></li>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="setup-with-confluent-kafka-spark-delta-lake-with-databricks-and-aws">Setup with Confluent Kafka, Spark, Delta Lake with Databricks and AWS</h1>
+<figure>
+    <img src="Tiwtter_Sentimnet_Architecture%281%29.png"/> <figcaption>
+            <h4>Project Final Diagram</h4>
+        </figcaption>
+</figure>
+
+<h2 id="instruction">Instruction</h2>
+<p>In this post, we will set up environment to perform Starbucks Twitter Sentiment Analysis with Confluent Kafka, Spark, Delta Lake with Databricks and AWS.</p>
+<h2 id="step-1-twitter-api-credentials">Step 1. Twitter API Credentials</h2>
+<p>As we performed in the previous <a href="https://youheekil.github.io/running-kafka-docker/" target="_blank" rel="noopener noreffer">post</a>, we need to get <a href="https://developer.twitter.com/en/docs/twitter-api/getting-started/getting-access-to-the-twitter-api" target="_blank" rel="noopener noreffer">Twitter API Credentials</a>. After getting it, we save these credential information in <code>.env</code> file.
+Make sure to include <code>.env</code> file in <code>.gitignore</code> to be ignored in the future.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-.env" data-lang=".env"><span class="c1"># .env</span>
+<span class="nv">CONSUMER_KEY</span> <span class="o">=</span> <span class="s2">&#34;&lt;api key&gt;&#34;</span>
+<span class="nv">CONSUMER_SECRET</span> <span class="o">=</span> <span class="s2">&#34;&lt;api secret&gt;&#34;</span>
+<span class="nv">ACCESS_TOKEN_KEY</span> <span class="o">=</span> <span class="s2">&#34;&lt;access key&gt;&#34;</span>
+<span class="nv">ACCESS_TOKEN_SECRET</span> <span class="o">=</span> <span class="s2">&#34;&lt;access secret&gt;&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="step-2-confluent-cloud">Step 2. Confluent Cloud</h2>
+<blockquote>
+<p>Confluent Cloud is a resilient, scalable streaming data service based on Apache Kafka®, delivered as a fully managed service - <a href="https://docs.confluent.io/cloud/current/get-started/index.html" target="_blank" rel="noopener noreffer">Confluent Cloud</a>. It offers users to manage cluster resources easily.</p>
+</blockquote>
+<h3 id="2-1-create-a-confluent-cloud-account-and-kafka-cluster">2-1. Create a Confluent Cloud account and Kafka cluster</h3>
+<p>First, create a free Confluent Cloud account and create a kafka cluster in <a href="https://docs.confluent.io/cloud/current/get-started/index.html" target="_blank" rel="noopener noreffer">Confluent Cloud</a>. I created a basic cluster which supports single zone availability with <code>aws</code> cloud provider.</p>
+<h3 id="2-2-create-a-kafka-topic-named-tweet_data-with-2-partitions">2-2. Create a Kafka Topic named <code>tweet_data</code> with 2 partitions.</h3>
+<p>From the navigation menu, click <code>Topics</code>, and in the Topics page, click <code>Create topic</code>. I set topic name as <code>tweet_data</code> with 2 partitions, the topic created on the Kafka cluster will be available for use by producers and consumers.</p>
+<h2 id="step-3-confluent-cloud-api-credentials">Step 3. Confluent Cloud API credentials.</h2>
+<h4 id="api-keys">API keys</h4>
+<p>From the navigation menu, click <code>API keys</code> under <code>Data Integration</code>.  If there is no available <code>API Keys</code>, click <code>add key</code> to get a new API keys (API_KEY, API_SECRET) and make sure to save it somewhere safe.</p>
+<h4 id="host-bootstrap-server">HOST: Bootstrap server</h4>
+<p>From the navigation menu, click <code>Cluster settings</code> under <code>Cluster Overview</code>. You can find <code>Identification</code> block which contains the information of <code>Bootstrap server</code>. Make sure to save it somewhere safe. It should be similar to <code>pkc-w12qj.ap-southeast-1.aws.confluent.cloud:9092</code></p>
+<p>HOST = pkc-w12qj.ap-southeast-1.aws.confluent.cloud</p>
+<h4 id="save-those-at-homeconfluentpythonconfig">Save those at <code>$HOME/.confluent/python.config</code></h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">vi <span class="nv">$HOME</span>/.confluent/python.config
+</code></pre></td></tr></table>
+</div>
+</div><p>Press <code>i</code> and <strong>copy&amp;paste the file below</strong> !</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">#kafka
+bootstrap.servers={HOST}:9092 
+security.protocol=SASL_SSL
+sasl.mechanisms=PLAIN
+sasl.username={API_KEY}
+sasl.password={API_SECRET}   
+</code></pre></td></tr></table>
+</div>
+</div><p>Then, replace HOST, API_KEY, API_SECRET with the values from <code>Step 3</code>. Press <code>:wq</code> to save the file.</p>
+<h2 id="step-4-create-a-databricks-cluster">Step 4. Create a Databricks Cluster</h2>
+<p>In this post, we are going to deploy Databricks on the AWS. Instruction to create a Databricks Cluster on AWS is well explained in <a href="https://www.youtube.com/watch?v=gU1BrfqMCYc" target="_blank" rel="noopener noreffer">HERE</a>.</p>
+<p>Click the <code>compute</code> under navigator bar, create a <code>Create Cluster</code>, and add some configuration like below in the picture.</p>
+<figure>
+    <img src="cluster.png"/> <figcaption>
+            <h4>Create a Databricks Cluster</h4>
+        </figcaption>
+</figure>
+
+<p>After creating a Databricks Cluster, it&rsquo;s time to explore the Databricks Workspace. Click the <code>Workspace</code> under navigator bar. Click the <code>users</code>, <code>&lt;user-account&gt;, then create a </code>Notebook`.</p>
+<figure>
+    <img src="workspace.png"/> <figcaption>
+            <h4>Create a Databricks Workspace</h4>
+        </figcaption>
+</figure>
+
+<p>Once you are done with creating the Databricks Notebook, please check the my github page for the source code of twitter data ingestion.</p>
+<h2 id="step-4-1-install-dependencies">Step 4-1. Install Dependencies</h2>
+<p>When you are creating a Cluster, you can find the <code>libraries</code> tab next next to <code>Configuration</code> tab.</p>
+<p>If you need any dependencies needed in the future, you can use this to install. Or you can install dependencies like this, <code>%pip install delta-spark spark-nlp==3.3.3 wordcloud contractions gensim pyldavis==3.2.0</code> too.</p>
+<h2 id="step-5-source-code-for-twitter-data-ingestion">Step 5. Source Code for twitter data ingestion</h2>
+<div class="details admonition note">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw" aria-hidden="true"></i>Required files for twitter real-time data ingestion<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><p><strong>Check the source codes in my github page</strong></p>
+<ul>
+<li>producer/producer.py</li>
+<li>producer/ccloud_lib.py</li>
+<li>run.sh</li>
+<li>Dockerfile</li>
+<li>.env</li>
+<li>requirements.txt</li>
+</ul>
+</div>
+        </div>
+    </div>
+<h4 id="still-some-modifications-are-needed">Still some modifications are needed</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="c"># Dockerfile</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">FROM</span><span class="s"> python:3.7-slim</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">COPY</span> requirements.txt /tmp/requirements.txt<span class="err">
+</span><span class="err"></span><span class="k">RUN</span> pip3 install -U -r /tmp/requirements.txt<span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">COPY</span> producer/ /producer<span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">CMD</span> <span class="o">[</span> <span class="s2">&#34;python3&#34;</span>, <span class="s2">&#34;producer/producer.py&#34;</span>, <span class="err">
+</span><span class="err"></span>  <span class="s2">&#34;-f&#34;</span>, <span class="s2">&#34;/root/.confluent/librdkafka.config&#34;</span>, <span class="err">
+</span><span class="err"></span>  <span class="s2">&#34;-t&#34;</span>, <span class="s2">&#34;&lt;your-kafka-topic-name&gt;&#34;</span> <span class="o">]</span><span class="err">
+</span><span class="err">
+</span></code></pre></td></tr></table>
+</div>
+</div><h4 id="procedure-to-run-the-kafka-twitter-data-ingestion">Procedure to run the kafka twitter data ingestion</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Shell" data-lang="Shell">pip install virtualenv
+virtualenv --version <span class="c1"># test your installation </span>
+<span class="nb">cd</span> &lt;your-project_folder&gt; 
+virtualenv ccloud-venv
+<span class="nb">source</span> ./ccloud-venv/bin/activate
+bash run.sh
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="step-6-spark-streaming-in-databricks---streaming-data-ingestion">Step 6. Spark Streaming in Databricks - Streaming Data Ingestion</h2>
+<p>Add Confluent API Credentials as we used before in <code>Step 3</code> and copy and paste the code below for readStreaming Kafka data in the Workspace we created.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">confluentApiKey</span> <span class="o">=</span> <span class="s2">&#34;xxx&#34;</span>
+<span class="n">confluentSecret</span> <span class="o">=</span> <span class="s2">&#34;xxx&#34;</span>
+<span class="n">host</span> <span class="o">=</span> <span class="s2">&#34;xxx&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">streamingInputDF</span> <span class="o">=</span> <span class="n">spark</span> \
+  <span class="o">.</span><span class="n">readStream</span> \
+  <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&#34;kafka&#34;</span><span class="p">)</span> \
+  <span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&#34;kafka.bootstrap.servers&#34;</span><span class="p">,</span> <span class="n">host</span><span class="p">)</span>  \
+  <span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&#34;kafka.security.protocol&#34;</span><span class="p">,</span> <span class="s2">&#34;SASL_SSL&#34;</span><span class="p">)</span> \
+  <span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&#34;kafka.sasl.jaas.config&#34;</span><span class="p">,</span> <span class="s2">&#34;kafkashaded.org.apache.kafka.common.security.plain.PlainLoginModule required username=&#39;{}&#39; password=&#39;{}&#39;;&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">confluentApiKey</span><span class="p">,</span> <span class="n">confluentSecret</span><span class="p">))</span> \
+  <span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&#34;kafka.ssl.endpoint.identification.algorithm&#34;</span><span class="p">,</span> <span class="s2">&#34;https&#34;</span><span class="p">)</span> \
+  <span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&#34;kafka.sasl.mechanism&#34;</span><span class="p">,</span> <span class="s2">&#34;PLAIN&#34;</span><span class="p">)</span> \
+  <span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&#34;startingOffsets&#34;</span><span class="p">,</span> <span class="s2">&#34;latest&#34;</span><span class="p">)</span> \
+  <span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&#34;failOnDataLoss&#34;</span><span class="p">,</span> <span class="s2">&#34;false&#34;</span><span class="p">)</span> \
+  <span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&#34;subscribe&#34;</span><span class="p">,</span> <span class="s2">&#34;product&#34;</span><span class="p">)</span> \
+  <span class="o">.</span><span class="n">load</span><span class="p">()</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>In order to run the Workspace, we need to <code>attach</code> the <code>cluster</code> we created before.</strong></p>
+<h2 id="step-7-spark-streaming-in-databricks---streaming-data-transformation">Step 7. Spark Streaming in Databricks - Streaming Data Transformation</h2>
+<p>Please check the whole procedure of streaming data tranformation in <code>notebooks/twitter_ingestion_transformation.ipynb</code> in my github-pages!</p>
+<h2 id="step-8-connect-databricks-and-delta-lake">Step 8. Connect DataBricks and Delta Lake</h2>
+<p>We are able to build a complete streaming data pipeline to consolidate the data by using Confluent Kafka as an input/source system for Spark Structured Streaming and Delta Lake as a storage layer.</p>
+<blockquote>
+<p><code>Delta Lake</code> is an open-source storage layer that brings ACID transactions to Apache Spark and big data workloads. It helps unify streaming and batch data processing. A <code>Delta Lake</code> table is both a batch table as well as a streaming source and sink. As data are stored in Parquet files, delta lake is storage agnostic. It could be an Amazon S3 bucket or an Azure Data Lake Storage container - <a href="https://blogit.michelin.io/kafka-to-delta-lake-using-apache-spark-streaming-avro/" target="_blank" rel="noopener noreffer">Michelen Blog</a>.</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">delta</span><span class="o">-</span><span class="n">spark</span>
+<span class="kn">from</span> <span class="nn">delta</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="o">...</span> <span class="c1"># after doing whole data transformation </span>
+
+<span class="c1"># Save the sentiment tweets streaming data into delta Lake under the path, /tmp/delta-tweet-table</span>
+
+<span class="n">sentiment_tweet</span> <span class="o">=</span> <span class="n">sentiment_tweets</span> \
+  <span class="o">.</span><span class="n">writeStream</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&#34;delta&#34;</span><span class="p">)</span> \
+  <span class="o">.</span><span class="n">outputMode</span><span class="p">(</span><span class="s2">&#34;append&#34;</span><span class="p">)</span> \
+  <span class="o">.</span><span class="n">trigger</span><span class="p">(</span><span class="n">processingTime</span><span class="o">=</span><span class="s1">&#39;10 seconds&#39;</span><span class="p">)</span> \
+  <span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&#34;checkpointLocation&#34;</span><span class="p">,</span> <span class="s2">&#34;/tmp/checkpoint&#34;</span><span class="p">)</span> \
+  <span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="s2">&#34;/tmp/delta-tweet-table&#34;</span><span class="p">)</span>
+
+<span class="c1"># reading data in Delta Lake</span>
+<span class="n">DF</span> <span class="o">=</span> <span class="p">(</span>
+   <span class="n">spark</span><span class="o">.</span><span class="n">read</span> \
+      <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&#34;delta&#34;</span><span class="p">)</span> \
+      <span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&#34;/tmp/delta-tweet-table&#34;</span><span class="p">)</span> \
+      <span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s2">&#34;table2&#34;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&#34;SELECT * FROM table2 LIMIT 1000&#34;</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="step-9-spark-nlp">Step 9. Spark NLP</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">%pip install spark-nlp
+ 
+</code></pre></td></tr></table>
+</div>
+</div><p>Installing Spark NLP from PyPI is not enough to run Spark NLP in Databricks. Therefore, we still need to install a dependency - <code>spark-nlp_2.12:3.4.4</code> (something similar to this one) under the <code>libraries</code> tab in the <code>Cluster</code>.</p>
+<p>Or attch spark-nlp-1.3.0.jar to the cluster. This library can be downloaded from the
+spark-packages repository <a href="https://spark-packages.org/package/JohnSnowLabs/spark-nlp">https://spark-packages.org/package/JohnSnowLabs/spark-nlp</a>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pyspark.ml</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+
+<span class="c1"># spark-nlp-1.3.0.jar is attached to the cluster. This library was downloaded from the</span>
+<span class="c1"># spark-packages repository https://spark-packages.org/package/JohnSnowLabs/spark-nlp</span>
+<span class="kn">from</span> <span class="nn">sparknlp.annotator</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">sparknlp.common</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">sparknlp.base</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="create-a-preprocessing-stages-pipeline">Create a Preprocessing Stages Pipeline</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># Create pre-processing stages</span>
+
+<span class="c1"># Stage 1: DocumentAssembler as entry point</span>
+<span class="n">documentAssembler</span> <span class="o">=</span> <span class="n">DocumentAssembler</span><span class="p">()</span> \
+                    <span class="o">.</span><span class="n">setInputCol</span><span class="p">(</span><span class="s2">&#34;value&#34;</span><span class="p">)</span> \
+                    <span class="o">.</span><span class="n">setOutputCol</span><span class="p">(</span><span class="s2">&#34;document&#34;</span><span class="p">)</span>
+ 
+<span class="c1"># Stage 2: Tokenizer</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">Tokenizer</span><span class="p">()</span> \
+              <span class="o">.</span><span class="n">setInputCols</span><span class="p">([</span><span class="s2">&#34;document&#34;</span><span class="p">])</span> \
+              <span class="o">.</span><span class="n">setOutputCol</span><span class="p">(</span><span class="s2">&#34;token&#34;</span><span class="p">)</span>
+ 
+<span class="c1"># Stage 3: Normalizer to lower text and to remove html tags, hyperlinks, twitter handles, </span>
+<span class="c1"># alphanumeric characters (integers, floats), timestamps in the format hh:mm (e.g. 10:30) and punctuation</span>
+<span class="n">cleanUpPatterns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s2">&#34;RT&#34;</span><span class="p">,</span> <span class="s2">&#34;&lt;[^&gt;]*&gt;&#34;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&#34;www\S+&#34;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&#34;http\S+&#34;</span><span class="p">,</span> <span class="s2">&#34;@[^\s]+&#34;</span><span class="p">,</span> <span class="s2">&#34;[\d-]&#34;</span><span class="p">,</span> <span class="s2">&#34;\d*\.\d+&#34;</span><span class="p">,</span> <span class="s2">&#34;\d*\:\d+&#34;</span><span class="p">,</span> <span class="s2">&#34;[^\w\d\s]&#34;</span><span class="p">]</span>
+<span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span> \
+                <span class="o">.</span><span class="n">setInputCols</span><span class="p">(</span><span class="s2">&#34;token&#34;</span><span class="p">)</span> \
+                <span class="o">.</span><span class="n">setOutputCol</span><span class="p">(</span><span class="s2">&#34;normalized&#34;</span><span class="p">)</span> \
+                <span class="o">.</span><span class="n">setCleanupPatterns</span><span class="p">(</span><span class="n">cleanUpPatterns</span><span class="p">)</span> \
+                <span class="o">.</span><span class="n">setLowercase</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+ 
+<span class="c1"># Stage 4: Remove stopwords</span>
+<span class="n">stopwords</span> <span class="o">=</span> <span class="n">StopWordsCleaner</span><span class="p">()</span>\
+              <span class="o">.</span><span class="n">setInputCols</span><span class="p">(</span><span class="s2">&#34;normalized&#34;</span><span class="p">)</span>\
+              <span class="o">.</span><span class="n">setOutputCol</span><span class="p">(</span><span class="s2">&#34;cleanTokens&#34;</span><span class="p">)</span>\
+              <span class="o">.</span><span class="n">setCaseSensitive</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+ 
+<span class="c1"># Stage 5: Lemmatizer</span>
+<span class="n">lemma</span> <span class="o">=</span> <span class="n">LemmatizerModel</span><span class="o">.</span><span class="n">pretrained</span><span class="p">()</span> \
+              <span class="o">.</span><span class="n">setInputCols</span><span class="p">([</span><span class="s2">&#34;cleanTokens&#34;</span><span class="p">])</span> \
+              <span class="o">.</span><span class="n">setOutputCol</span><span class="p">(</span><span class="s2">&#34;lemma&#34;</span><span class="p">)</span>
+ 
+<span class="c1"># Stage 6: Stemmer stems tokens to bring it to root form</span>
+<span class="c1">#.setInputCols([&#34;cleanTokens&#34;]).setOutputCol(&#34;stem&#34;) \</span>
+<span class="n">stemmer</span> <span class="o">=</span> <span class="n">Stemmer</span><span class="p">()</span> \
+            <span class="o">.</span><span class="n">setInputCols</span><span class="p">([</span><span class="s2">&#34;lemma&#34;</span><span class="p">])</span> \
+            <span class="o">.</span><span class="n">setInputCols</span><span class="p">([</span><span class="s2">&#34;cleanTokens&#34;</span><span class="p">])</span> \
+            <span class="o">.</span><span class="n">setOutputCol</span><span class="p">(</span><span class="s2">&#34;stem&#34;</span><span class="p">)</span>
+ 
+<span class="c1"># Stage 7: Finisher to convert custom document structure to array of tokens</span>
+<span class="n">finisher</span> <span class="o">=</span> <span class="n">Finisher</span><span class="p">()</span> \
+            <span class="o">.</span><span class="n">setInputCols</span><span class="p">([</span><span class="s2">&#34;stem&#34;</span><span class="p">])</span> \
+            <span class="o">.</span><span class="n">setOutputCols</span><span class="p">([</span><span class="s2">&#34;token_features&#34;</span><span class="p">])</span> \
+            <span class="o">.</span><span class="n">setOutputAsArray</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span> \
+            <span class="o">.</span><span class="n">setCleanAnnotations</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pyspark.ml</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+
+<span class="c1"># Check pre-processing pipeline</span>
+<span class="n">prep_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">stages</span><span class="o">=</span><span class="p">[</span><span class="n">documentAssembler</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">normalizer</span><span class="p">,</span> <span class="n">stopwords</span><span class="p">,</span> <span class="n">lemma</span><span class="p">,</span> <span class="n">stemmer</span><span class="p">,</span> <span class="n">finisher</span><span class="p">])</span>
+ 
+<span class="n">empty_df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">([[</span><span class="s1">&#39;&#39;</span><span class="p">]])</span><span class="o">.</span><span class="n">toDF</span><span class="p">(</span><span class="s2">&#34;value&#34;</span><span class="p">)</span>
+<span class="n">prep_pipeline_model</span> <span class="o">=</span> <span class="n">prep_pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">empty_df</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">prep_pipeline_model</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">tweet_df</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The pipeline is followed by the procedure as below.
+<figure>
+    <img src="NLP.png"/> <figcaption>
+            <h4>NLP pipeline in Spark</h4>
+        </figcaption>
+</figure>
+</p>
+<h2 id="option-integrate-databricks-notebook-with-github">[Option] integrate databricks notebook with Github</h2>
+<p>You can connect databricks notebook with Github for the revision history. The procedure is described in <a href="https://www.youtube.com/watch?v=O-DpRnJsLoQ" target="_blank" rel="noopener noreffer">here</a></p>
+<h2 id="reference">Reference</h2>
+<p><a href="https://github.com/scoyne2/kafka_spark_streams">https://github.com/scoyne2/kafka_spark_streams</a>
+<a href="https://blogit.michelin.io/kafka-to-delta-lake-using-apache-spark-streaming-avro/">https://blogit.michelin.io/kafka-to-delta-lake-using-apache-spark-streaming-avro/</a>
+<a href="https://medium.com/@lorenagongang/sentiment-analysis-on-streaming-twitter-data-using-kafka-spark-structured-streaming-python-part-b27aecca697a">https://medium.com/@lorenagongang/sentiment-analysis-on-streaming-twitter-data-using-kafka-spark-structured-streaming-python-part-b27aecca697a</a>
+<a href="https://winf-hsos.github.io/databricks-notebooks/big-data-analytics/ss-2020/Word%20Clouds%20with%20Python.html">https://winf-hsos.github.io/databricks-notebooks/big-data-analytics/ss-2020/Word%20Clouds%20with%20Python.html</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-06-08</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/project1-1.-starbucks-twitter-sentimental-analysis/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/" data-title="[Starbucks Twitter Sentiment Analysis] 1. Environment Setup"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/" data-title="[Starbucks Twitter Sentiment Analysis] 1. Environment Setup"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/" data-title="[Starbucks Twitter Sentiment Analysis] 1. Environment Setup"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/" data-title="[Starbucks Twitter Sentiment Analysis] 1. Environment Setup"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/project1-0.-starbucks-twitter-sentimental-analysis/" class="prev" rel="prev" title="[Starbucks Twitter Sentiment Analysis] 0. Architecture Planning"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>[Starbucks Twitter Sentiment Analysis] 0. Architecture Planning</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.79.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Youhee Kil</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/twemoji/twemoji.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/index.umd.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"YOUHEE","id-2":"YOUHEE"},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"},"twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

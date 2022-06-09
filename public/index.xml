@@ -1,0 +1,106 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>YOUHEE</title>
+        <link>http://youheekil.github.io/</link>
+        <description>YOUHEE</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>youhee.kil@gmail.com (Youhee Kil)</managingEditor>
+            <webMaster>youhee.kil@gmail.com (Youhee Kil)</webMaster><lastBuildDate>Wed, 08 Jun 2022 00:00:00 &#43;0000</lastBuildDate>
+            <atom:link href="http://youheekil.github.io/index.xml" rel="self" type="application/rss+xml" />
+        <item>
+    <title>[Starbucks Twitter Sentiment Analysis] 1. Environment Setup</title>
+    <link>http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/</link>
+    <pubDate>Wed, 08 Jun 2022 00:00:00 &#43;0000</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/</guid>
+    <description><![CDATA[Setup with Confluent Kafka, Spark, Delta Lake with Databricks and AWS   Project Final Diagram   Instruction In this post, we will set up environment to perform Starbucks Twitter Sentiment Analysis with Confluent Kafka, Spark, Delta Lake with Databricks and AWS.
+Step 1. Twitter API Credentials As we performed in the previous post, we need to get Twitter API Credentials. After getting it, we save these credential information in .]]></description>
+</item>
+<item>
+    <title>[Starbucks Twitter Sentiment Analysis] 0. Architecture Planning</title>
+    <link>http://youheekil.github.io/project1-0.-starbucks-twitter-sentimental-analysis/</link>
+    <pubDate>Mon, 06 Jun 2022 00:00:00 &#43;0000</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/project1-0.-starbucks-twitter-sentimental-analysis/</guid>
+    <description><![CDATA[Architecture Planning   From Kafka to Delta Lake using Apache Spark Structured Streaming   Image Source: From Kafka to Delta Lake using Apache Spark Structured Streaming
+1. Aim The aim of the Starbucks Twitter Sentimental Analysis project is to build end-to-end twitter data streaming pipeline to analyze brand sentiment analysis.
+ Brand sentiment analysis is, to put it simply, a way of determining the general attitude toward your brand, product, or service.]]></description>
+</item>
+<item>
+    <title>Sentiment Analysis with NLTK, TextBlob, Spark Streaming</title>
+    <link>http://youheekil.github.io/text-analysis/</link>
+    <pubDate>Sun, 05 Jun 2022 00:00:00 &#43;0000</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/text-analysis/</guid>
+    <description><![CDATA[TextBlob The TextBlob method produces polarity and subjectivity score. The polarity score which falls between [-1.0, 1.0] indicates a sensentivity from the sentence. If the score is below zero (0.0), sensitivity of the sentence is negativity. While the score is above zero (0.0), then the sensitivity of the sentence is positive. The subjectivity score which falls between [0.0, 1.0] identifies whether the sentence is objective or subjectivity. If the score is close to 0.]]></description>
+</item>
+<item>
+    <title>[SongPlz-Bot] 3. ETL Steps</title>
+    <link>http://youheekil.github.io/project2-3.-etl-steps/</link>
+    <pubDate>Fri, 27 May 2022 00:00:00 &#43;0000</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/project2-3.-etl-steps/</guid>
+    <description><![CDATA[Steps 1. Set up virtual environment 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15  where python # find the location of python  pip install pipenv # install pipenv which is virtual environment pip list mkdir &lt;project folder&gt; &amp;&amp; cd &lt;project folder&gt; # the ending of the path would be `/python.exe`  pipenv shell --python &lt;the path of python version you want to use&gt; pip list # list of packages  pipenv --venv # path to version environment  pipenv install pandas pip list # check if pandas is installed  # start the created virtual env pipenv shell   2.]]></description>
+</item>
+<item>
+    <title>[SongPlz-Bot] 2. Severless &amp; Data Ingestion &amp; Recommender System</title>
+    <link>http://youheekil.github.io/project2-2.-songplz-bot/</link>
+    <pubDate>Mon, 23 May 2022 00:00:00 &#43;0000</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/project2-2.-songplz-bot/</guid>
+    <description><![CDATA[There are two basic recommender systems: (1) Collaborative Filtering, (2) Content-Based Filtering. It differs by what kinds of data that you are working with. Collaborative Filtering approach works with the user-item interactions types of data, such as ratings or buying behavior. On the other hand, Content-Based Filtering approach is for the attribute information about the users and items, such as textual profiles or relevant keywords.
+In this post, I am going to perform an effective song recommendataion system with the combination of two user&rsquo;s informations - mood and favorite artist.]]></description>
+</item>
+<item>
+    <title>Algorithm Pattern</title>
+    <link>http://youheekil.github.io/algorithm-pattern/</link>
+    <pubDate>Mon, 23 May 2022 00:00:00 &#43;0000</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/algorithm-pattern/</guid>
+    <description><![CDATA[https://www.educative.io/blog/top-data-engineer-interview-questions-and-tips#programming-languages https://www.codinginterview.com/interview-roadmap
+0. Brushing up Python  How to read/write from/to files  ​
+ How to read input from the console  ​
+ How to split strings  ​
+ Is string length a function or a property (answer: it doesn’t matter, but still reflects poorly on you)  ​
+  How to declare and use 2D arrays
+  Process command line arguments
+  Remember to revise topics like:]]></description>
+</item>
+<item>
+    <title>[SongPlz-Bot] 1. Slack and Spotify API</title>
+    <link>http://youheekil.github.io/project2-1.-songplz-bot/</link>
+    <pubDate>Sun, 22 May 2022 00:00:00 &#43;0000</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/project2-1.-songplz-bot/</guid>
+    <description><![CDATA[SongPlz Bot - Slack and Spotify API What is API API stands for Application Programming Interface. The most common example to describe the API is being a waiter in the restaurant.
+  Interface between human and object   Interface  Interface is a program that allows a user to interact computers in person or over a network, which is a software intermediary that allows two applications to talk to each other]]></description>
+</item>
+<item>
+    <title>[Kafka] Running Kafka with Docker (python)</title>
+    <link>http://youheekil.github.io/running-kafka-docker/</link>
+    <pubDate>Sat, 21 May 2022 10:38:13 &#43;0900</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/running-kafka-docker/</guid>
+    <description><![CDATA[Kafka with Docker   In this post, we would like to go over how to run Kafka with Docker and Python. Before starting the post, make sure you have installed Docker (Docker hub) on your computer.
+Step 1. Docker Image Setup Okay, first, let&rsquo;s create a directory folder to store docker-compose.yml file. The docker-compose file does not run your code itself.
+1  $ mkdir ~/docker-kafka &amp;&amp; cd docker-kafka   You can pull kafka and zookeeper images by using this docker pull command, more detailed explanation can be found in the following link - kafka and zookeeper from Docker Hub.]]></description>
+</item>
+<item>
+    <title>[SongPlz-Bot] 0. Slack Serverless Song Recommendataion Chatbot (SongPlz) - Architecture Planning</title>
+    <link>http://youheekil.github.io/project2-0.-songplz-bot/</link>
+    <pubDate>Sat, 21 May 2022 00:00:00 &#43;0000</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/project2-0.-songplz-bot/</guid>
+    <description><![CDATA[SongPlz Bot - Architecture Planning 1. Aim The aim of this SongPlz Bot project (Slack Song Recommendation Bot) is to build a data pipeline to create a chatting bot for song recommendation with Serverless architecture which is a way to develop and run applications and services without managing infrastructure (AWS). If you are still unsure about serverless architecture, please click here.
+There are many cloud services available providing FaaS such as AWS Lambda, Azure Functions, and Google Cloud Function.]]></description>
+</item>
+<item>
+    <title>[Udacity] Data Streaming</title>
+    <link>http://youheekil.github.io/udacity-dataengineer-datastreaming/</link>
+    <pubDate>Thu, 19 May 2022 13:38:13 &#43;0900</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/udacity-dataengineer-datastreaming/</guid>
+    <description><![CDATA[Udacity Program   Kafka (figure)   Technologies used  Apache Kafka, Kafka Connect, KSQL, Faust Stream Processing, Spark Structured Streaming   About The Nanodegree Data Streaming skill was gained to be prepared for the next era of data engineering. Learned how to analyze data in real-time using Apache Kafka and Spark, and build applications to process live insights from data at scale.
+Program Details During the program, we completed two courses with two projects.]]></description>
+</item>
+</channel>
+</rss>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>[Starbucks Twitter Sentiment Analysis] 0. Architecture Planning - YOUHEE</title><meta name="Description" content=""><meta property="og:title" content="[Starbucks Twitter Sentiment Analysis] 0. Architecture Planning" />
+<meta property="og:description" content="Architecture Planning   From Kafka to Delta Lake using Apache Spark Structured Streaming   Image Source: From Kafka to Delta Lake using Apache Spark Structured Streaming
+1. Aim The aim of the Starbucks Twitter Sentimental Analysis project is to build end-to-end twitter data streaming pipeline to analyze brand sentiment analysis.
+ Brand sentiment analysis is, to put it simply, a way of determining the general attitude toward your brand, product, or service." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://youheekil.github.io/project1-0.-starbucks-twitter-sentimental-analysis/" />
+<meta property="og:image" content="http://youheekil.github.io/logo.png"/>
+<meta property="article:published_time" content="2022-06-06T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-06-06T00:00:00+00:00" /><meta property="og:site_name" content="YOUHEE" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://youheekil.github.io/logo.png"/>
+
+<meta name="twitter:title" content="[Starbucks Twitter Sentiment Analysis] 0. Architecture Planning"/>
+<meta name="twitter:description" content="Architecture Planning   From Kafka to Delta Lake using Apache Spark Structured Streaming   Image Source: From Kafka to Delta Lake using Apache Spark Structured Streaming
+1. Aim The aim of the Starbucks Twitter Sentimental Analysis project is to build end-to-end twitter data streaming pipeline to analyze brand sentiment analysis.
+ Brand sentiment analysis is, to put it simply, a way of determining the general attitude toward your brand, product, or service."/>
+<meta name="application-name" content="YOUHEE">
+<meta name="apple-mobile-web-app-title" content="YOUHEE"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://youheekil.github.io/project1-0.-starbucks-twitter-sentimental-analysis/" /><link rel="prev" href="http://youheekil.github.io/text-analysis/" /><link rel="next" href="http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "[Starbucks Twitter Sentiment Analysis] 0. Architecture Planning",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/youheekil.github.io\/project1-0.-starbucks-twitter-sentimental-analysis\/"
+        },"genre": "posts","wordcount":  647 ,
+        "url": "http:\/\/youheekil.github.io\/project1-0.-starbucks-twitter-sentimental-analysis\/","datePublished": "2022-06-06T00:00:00+00:00","dateModified": "2022-06-06T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "YOUHEE","logo": "http:\/\/youheekil.github.io\/favicon.ico"},"author": {
+                "@type": "Person",
+                "name": "Youhee"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="YOUHEE"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        data-srcset="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 1.5x, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 2x"
+        data-sizes="auto"
+        alt="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        title="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="YOUHEE"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        data-srcset="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 1.5x, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 2x"
+        data-sizes="auto"
+        alt="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        title="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">[Starbucks Twitter Sentiment Analysis] 0. Architecture Planning</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Youhee</a></span>&nbsp;<span class="post-category">included in <a href="/categories/project/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Project</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-06-06">2022-06-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;647 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-aim">1. Aim</a></li>
+    <li><a href="#2-happy-path">2. Happy Path</a></li>
+    <li><a href="#3-tech-stack">3. Tech Stack</a></li>
+    <li><a href="#4-procedure">4. Procedure</a>
+      <ul>
+        <li><a href="#option-1">Option 1.</a></li>
+        <li><a href="#option-2">Option 2</a></li>
+        <li><a href="#option-3">Option 3.</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-what-is-spark-streaming">5. What is Spark Streaming?</a></li>
+    <li><a href="#spark-streaming-vs-spark-structured-streaming">Spark Streaming vs Spark Structured Streaming</a>
+      <ul>
+        <li><a href="#identify-input-sources">Identify Input sources</a></li>
+        <li><a href="#identify-output-modes">Identify Output Modes</a></li>
+        <li><a href="#output-sinks">Output Sinks</a></li>
+        <li><a href="#testing-locally-with-sockets">Testing locally with sockets</a></li>
+        <li><a href="#real-examples-of-data-streaming">Real Examples of data streaming</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="architecture-planning">Architecture Planning</h1>
+<figure>
+    <img src="head_image.png"/> <figcaption>
+            <h4>From Kafka to Delta Lake using Apache Spark Structured Streaming</h4>
+        </figcaption>
+</figure>
+
+<p>Image Source: <a href="https://blogit.michelin.io/kafka-to-delta-lake-using-apache-spark-streaming-avro/" target="_blank" rel="noopener noreffer">From Kafka to Delta Lake using Apache Spark Structured Streaming</a></p>
+<h2 id="1-aim">1. Aim</h2>
+<p>The aim of the Starbucks Twitter Sentimental Analysis project is to build end-to-end twitter data streaming pipeline to analyze brand sentiment analysis.</p>
+<blockquote>
+<p><code>Brand sentiment analysis</code> is, to put it simply, a way of determining the general attitude toward your brand, product, or service. Nowadays, the easiest way to analyze brand sentiment is through media monitoring tools. Customers often express their feeling or option toward the brand on social media channels. These opinions will give insight on the brand&rsquo;s position. The sentimental is determined mostly just as positive, negative, or neutral (<a href="https://www.mediatoolkit.com/blog/brand-sentiment-analysis/#:~:text=Brand%20sentiment%20analysis%20is%2C%20to,is%20through%20media%20monitoring%20tools." target="_blank" rel="noopener noreffer">MediaToolKit</a>)</p>
+</blockquote>
+<figure>
+    <img src="project_overview.png"/> <figcaption>
+            <h4>Project Overview</h4>
+        </figcaption>
+</figure>
+
+<h2 id="2-happy-path">2. Happy Path</h2>
+<ul>
+<li>connect with big data streams to ingest twtiter data. Azure event hub -&gt; azure stream analytics and dump into datalake gen2.<br>
+then azure synapse analytics and connect to azure machine learning for sentimental analysis</li>
+</ul>
+<div class="details admonition note">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw" aria-hidden="true"></i>Script Planning<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><ul>
+<li>producer.py</li>
+<li>consumer.py</li>
+<li>config (.env)</li>
+<li>Dockerfile</li>
+<li>run.sh</li>
+</ul>
+</div>
+        </div>
+    </div>
+<h2 id="3-tech-stack">3. Tech Stack</h2>
+<ul>
+<li>Kafka, Spark Streaming, Confluent Cloud, Databricks, Delta Lake, Spark NLP</li>
+</ul>
+<h2 id="4-procedure">4. Procedure</h2>
+<p>There were three options to choose for this project. The first Option I considered was the combination of Kafka and Spark streaming. The second option was the combination of socket and Spark streaming, and third is the combination of Confluent Cloud and Databricks.</p>
+<h3 id="option-1">Option 1.</h3>
+<ul>
+<li>Docker Platform</li>
+</ul>
+<p>Twitter - Kafka - Spark Streaming</p>
+<h3 id="option-2">Option 2</h3>
+<ul>
+<li>local environment
+Twitter - Socket - Spark Streaming</li>
+</ul>
+<h3 id="option-3">Option 3.</h3>
+<p>Combination of Confluent Cloud and Databricks<br>
+Twitter - Kafka - Spark Streaming</p>
+<p>After the trials and concerns, I decided to go for Option 3. There are three reasons, first, I faced some struggles while submiting python file for spark streaming. My local environment kept giving me errors whenever I tried to submit the python file with <code>spark-submit</code> code. Second, I wanted to try different cloud platform, and found out that Confluent Cloud perform reall well. For the Spark Streaming, Databricks was used since it is well organized and easy setup for Spark Streaming and have Delta Lake.</p>
+<h2 id="5-what-is-spark-streaming">5. What is Spark Streaming?</h2>
+<ul>
+<li>Data is continuously flowing in so that it&rsquo;s a bit different than working with batch data.</li>
+<li>Processing engine to process data in real-time from sources and output data to external storage systems.</li>
+</ul>
+<blockquote>
+<p>STREAMING API is diffrent than API calls. For Streaming API, we just make one request to API that opens up portal where all of the event/data are going to be streaming back to client.</p>
+</blockquote>
+<h2 id="spark-streaming-vs-spark-structured-streaming">Spark Streaming vs Spark Structured Streaming</h2>
+<h3 id="identify-input-sources">Identify Input sources</h3>
+<ul>
+<li>File Source: reads files written in a directory as a stream of data. Supported file formats are text, CSV, JSON, ORC, Parquet</li>
+<li>kafka Source: Reads data from Kafka.</li>
+<li>Socket Source(for testing): Reads UTF8 text data from a socket connection. The listening server socket is at the driver.</li>
+</ul>
+<h3 id="identify-output-modes">Identify Output Modes</h3>
+<ul>
+<li>Append Mode: Spark will output only newly processed row since the last trigger</li>
+<li>Update Mode: Spark will output only updated rows since the last trigger</li>
+<li>Complete mode: Spark will output all the rows it has processed so far.</li>
+</ul>
+<h3 id="output-sinks">Output Sinks</h3>
+<ul>
+<li>File sink: Store the output to a directory</li>
+<li>Kafka sink: Store the output to one or more topics in Kafka</li>
+<li>Console sink (for debugging): The output is printed to the console/stdout every time there is a trigger</li>
+<li>Memory sink (for debugging): The output is sotred in memory as an in-memory table</li>
+</ul>
+<h3 id="testing-locally-with-sockets">Testing locally with sockets</h3>
+<p>Testing with sockets helps you to design the overall data extraction, transformation and storage place in your local environment.</p>
+<p>Once you scale up, other services such as Kafka can replace the socket.</p>
+<blockquote>
+<p>Socket is like an electric socket. Data is coming into the socket like electricity and then Spark is the plug that accepts that electricity and sends it to your data stroage place.</p>
+</blockquote>
+<h3 id="real-examples-of-data-streaming">Real Examples of data streaming</h3>
+<ul>
+<li>Chat bots</li>
+<li>Message apps</li>
+<li>Real-time ML prediction like Netflix, Amazon</li>
+<li>E-commerce apps</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-06-06</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/project1-0.-starbucks-twitter-sentimental-analysis/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://youheekil.github.io/project1-0.-starbucks-twitter-sentimental-analysis/" data-title="[Starbucks Twitter Sentiment Analysis] 0. Architecture Planning"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://youheekil.github.io/project1-0.-starbucks-twitter-sentimental-analysis/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://youheekil.github.io/project1-0.-starbucks-twitter-sentimental-analysis/" data-title="[Starbucks Twitter Sentiment Analysis] 0. Architecture Planning"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://youheekil.github.io/project1-0.-starbucks-twitter-sentimental-analysis/" data-title="[Starbucks Twitter Sentiment Analysis] 0. Architecture Planning"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://youheekil.github.io/project1-0.-starbucks-twitter-sentimental-analysis/" data-title="[Starbucks Twitter Sentiment Analysis] 0. Architecture Planning"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/text-analysis/" class="prev" rel="prev" title="Sentiment Analysis with NLTK, TextBlob, Spark Streaming"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Sentiment Analysis with NLTK, TextBlob, Spark Streaming</a>
+            <a href="/project1-1.-starbucks-twitter-sentimental-analysis/" class="next" rel="next" title="[Starbucks Twitter Sentiment Analysis] 1. Environment Setup">[Starbucks Twitter Sentiment Analysis] 1. Environment Setup<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.79.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Youhee Kil</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/twemoji/twemoji.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/index.umd.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"YOUHEE","id-2":"YOUHEE"},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"},"twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
