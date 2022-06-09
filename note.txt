@@ -1,10 +1,15 @@
+emoji :
+
 https://fontawesome.com/icons/star?s=solid
 
+
+code :
 chmod 777 deploy.sh
 ./deploy.sh
 
 
-git submodule add -b main https://github.com/youheekil/youheekil.github.io.git public
-
-
 https://github.com/youheekil/youheekil.github.io.git
+
+
+ref:
+https://dyiwu.github.io/2021/01/install-hugo-loveit/

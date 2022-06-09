@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>[Starbucks Twitter Sentiment Analysis] 1. Environment Setup - YOUHEE</title><meta name="Description" content=""><meta property="og:title" content="[Starbucks Twitter Sentiment Analysis] 1. Environment Setup" />
+        <title>[Starbucks Twitter Sentiment Analysis] 1. Instruction - YOUHEE</title><meta name="Description" content=""><meta property="og:title" content="[Starbucks Twitter Sentiment Analysis] 1. Instruction" />
 <meta property="og:description" content="Setup with Confluent Kafka, Spark, Delta Lake with Databricks and AWS   Project Final Diagram   Instruction In this post, we will set up environment to perform Starbucks Twitter Sentiment Analysis with Confluent Kafka, Spark, Delta Lake with Databricks and AWS.
 Step 1. Twitter API Credentials As we performed in the previous post, we need to get Twitter API Credentials. After getting it, we save these credential information in ." />
 <meta property="og:type" content="article" />
@@ -15,7 +15,7 @@ Step 1. Twitter API Credentials As we performed in the previous post, we need to
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="http://youheekil.github.io/logo.png"/>
 
-<meta name="twitter:title" content="[Starbucks Twitter Sentiment Analysis] 1. Environment Setup"/>
+<meta name="twitter:title" content="[Starbucks Twitter Sentiment Analysis] 1. Instruction"/>
 <meta name="twitter:description" content="Setup with Confluent Kafka, Spark, Delta Lake with Databricks and AWS   Project Final Diagram   Instruction In this post, we will set up environment to perform Starbucks Twitter Sentiment Analysis with Confluent Kafka, Spark, Delta Lake with Databricks and AWS.
 Step 1. Twitter API Credentials As we performed in the previous post, we need to get Twitter API Credentials. After getting it, we save these credential information in ."/>
 <meta name="application-name" content="YOUHEE">
@@ -25,7 +25,7 @@ Step 1. Twitter API Credentials As we performed in the previous post, we need to
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "[Starbucks Twitter Sentiment Analysis] 1. Environment Setup",
+        "headline": "[Starbucks Twitter Sentiment Analysis] 1. Instruction",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
@@ -117,7 +117,7 @@ Step 1. Twitter API Credentials As we performed in the previous post, we need to
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content always-active" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">[Starbucks Twitter Sentiment Analysis] 1. Environment Setup</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">[Starbucks Twitter Sentiment Analysis] 1. Instruction</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Youhee</a></span>&nbsp;<span class="post-category">included in <a href="/categories/project/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Project</a></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-06-08">2022-06-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1326 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
@@ -173,7 +173,7 @@ Step 1. Twitter API Credentials As we performed in the previous post, we need to
 </nav></div>
             </div><div class="content" id="content"><h1 id="setup-with-confluent-kafka-spark-delta-lake-with-databricks-and-aws">Setup with Confluent Kafka, Spark, Delta Lake with Databricks and AWS</h1>
 <figure>
-    <img src="Tiwtter_Sentimnet_Architecture%281%29.png"/> <figcaption>
+    <img src="Tiwtter_Sentimnet_Architecture.png"/> <figcaption>
             <h4>Project Final Diagram</h4>
         </figcaption>
 </figure>
@@ -258,7 +258,7 @@ sasl.password={API_SECRET}
         </figcaption>
 </figure>
 
-<p>Once you are done with creating the Databricks Notebook, please check the my github page for the source code of twitter data ingestion.</p>
+<p>Once you are done with creating the Databricks Notebook, please check the my <a href="https://github.com/youheekil/twitter-sentiment-analysis" target="_blank" rel="noopener noreffer">github page</a> for the source code of twitter data ingestion.</p>
 <h2 id="step-4-1-install-dependencies">Step 4-1. Install Dependencies</h2>
 <p>When you are creating a Cluster, you can find the <code>libraries</code> tab next next to <code>Configuration</code> tab.</p>
 <p>If you need any dependencies needed in the future, you can use this to install. Or you can install dependencies like this, <code>%pip install delta-spark spark-nlp==3.3.3 wordcloud contractions gensim pyldavis==3.2.0</code> too.</p>
@@ -268,7 +268,7 @@ sasl.password={API_SECRET}
             <i class="icon fas fa-pencil-alt fa-fw" aria-hidden="true"></i>Required files for twitter real-time data ingestion<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
         </div>
         <div class="details-content">
-            <div class="admonition-content"><p><strong>Check the source codes in my github page</strong></p>
+            <div class="admonition-content"><p><strong>Check the source codes in my <a href="https://github.com/youheekil/twitter-sentiment-analysis" target="_blank" rel="noopener noreffer">github page</a></strong></p>
 <ul>
 <li>producer/producer.py</li>
 <li>producer/ccloud_lib.py</li>
@@ -616,7 +616,7 @@ spark-packages repository <a href="https://spark-packages.org/package/JohnSnowLa
                             <a class="link-to-markdown" href="/project1-1.-starbucks-twitter-sentimental-analysis/index.md" target="_blank">Read Markdown</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/" data-title="[Starbucks Twitter Sentiment Analysis] 1. Environment Setup"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/" data-title="[Starbucks Twitter Sentiment Analysis] 1. Environment Setup"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/" data-title="[Starbucks Twitter Sentiment Analysis] 1. Environment Setup"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/" data-title="[Starbucks Twitter Sentiment Analysis] 1. Environment Setup"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/" data-title="[Starbucks Twitter Sentiment Analysis] 1. Instruction"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/" data-title="[Starbucks Twitter Sentiment Analysis] 1. Instruction"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/" data-title="[Starbucks Twitter Sentiment Analysis] 1. Instruction"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/" data-title="[Starbucks Twitter Sentiment Analysis] 1. Instruction"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>

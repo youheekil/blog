@@ -1,8 +1,8 @@
-# [Starbucks Twitter Sentiment Analysis] 1. Environment Setup
+# [Starbucks Twitter Sentiment Analysis] 1. Instruction
 
 # Setup with Confluent Kafka, Spark, Delta Lake with Databricks and AWS
 
-{{< figure src="Tiwtter_Sentimnet_Architecture(1).png" title="Project Final Diagram" >}}
+{{< figure src="Tiwtter_Sentimnet_Architecture.png" title="Project Final Diagram" >}}
 
 
 ## Instruction
@@ -80,7 +80,7 @@ After creating a Databricks Cluster, it's time to explore the Databricks Workspa
 
 {{< figure src="workspace.png" title="Create a Databricks Workspace" >}}
 
-Once you are done with creating the Databricks Notebook, please check the my github page for the source code of twitter data ingestion. 
+Once you are done with creating the Databricks Notebook, please check the my [github page](https://github.com/youheekil/twitter-sentiment-analysis) for the source code of twitter data ingestion. 
 
 
 ## Step 4-1. Install Dependencies 
@@ -96,7 +96,7 @@ If you need any dependencies needed in the future, you can use this to install. 
 
 {{< admonition type=note title="Required files for twitter real-time data ingestion" open=false >}}
 
-**Check the source codes in my github page** 
+**Check the source codes in my [github page](https://github.com/youheekil/twitter-sentiment-analysis)** 
 
 * producer/producer.py
 * producer/ccloud_lib.py 
