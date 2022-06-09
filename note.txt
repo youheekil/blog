@@ -2,3 +2,9 @@ https://fontawesome.com/icons/star?s=solid
 
 chmod 777 deploy.sh
 ./deploy.sh
+
+
+git submodule add -b main https://github.com/youheekil/youheekil.github.io.git public
+
+
+https://github.com/youheekil/youheekil.github.io.git
