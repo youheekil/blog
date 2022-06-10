@@ -32,7 +32,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/youheekil.github.io\/project1-0.-starbucks-twitter-sentimental-analysis\/"
-        },"genre": "posts","keywords": "Sentiment-Analysis, kafka, spark-streaming","wordcount":  647 ,
+        },"genre": "posts","keywords": "Sentiment-Analysis, kafka, spark-streaming","wordcount":  624 ,
         "url": "http:\/\/youheekil.github.io\/project1-0.-starbucks-twitter-sentimental-analysis\/","datePublished": "2022-06-06T00:00:00+00:00","dateModified": "2022-06-06T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "YOUHEE","logo": "http:\/\/youheekil.github.io\/favicon.ico"},"author": {
@@ -120,9 +120,9 @@
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content always-active" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">[Starbucks Twitter Sentiment Analysis] 0. Architecture Planning</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Youhee</a></span>&nbsp;<span class="post-category">included in <a href="/categories/project/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Project</a>&nbsp;<a href="/categories/sentiment-analysis/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Sentiment-Analysis</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-06-06">2022-06-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;647 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Youhee</a></span>&nbsp;<span class="post-category">included in <a href="/categories/project/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Project</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-06-06">2022-06-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;624 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -173,8 +173,7 @@
 
 <h2 id="2-happy-path">2. Happy Path</h2>
 <ul>
-<li>connect with big data streams to ingest twtiter data. Azure event hub -&gt; azure stream analytics and dump into datalake gen2.<br>
-then azure synapse analytics and connect to azure machine learning for sentimental analysis</li>
+<li>connect with big data streams to ingest twtiter data.</li>
 </ul>
 <div class="details admonition note">
         <div class="details-summary admonition-title">
@@ -204,13 +203,13 @@ then azure synapse analytics and connect to azure machine learning for sentiment
 <p>Twitter - Kafka - Spark Streaming</p>
 <h3 id="option-2">Option 2</h3>
 <ul>
-<li>local environment
-Twitter - Socket - Spark Streaming</li>
+<li>local environment</li>
 </ul>
+<p>Twitter - Socket - Spark Streaming</p>
 <h3 id="option-3">Option 3.</h3>
 <p>Combination of Confluent Cloud and Databricks<br>
 Twitter - Kafka - Spark Streaming</p>
-<p>After the trials and concerns, I decided to go for Option 3. There are three reasons, first, I faced some struggles while submiting python file for spark streaming. My local environment kept giving me errors whenever I tried to submit the python file with <code>spark-submit</code> code. Second, I wanted to try different cloud platform, and found out that Confluent Cloud perform reall well. For the Spark Streaming, Databricks was used since it is well organized and easy setup for Spark Streaming and have Delta Lake.</p>
+<p>After tons of trials&amp;errors and concerns, I decided to go for Option 3. There are few reasons, first, I faced some struggles while submiting python file for spark streaming. My local environment kept giving me errors whenever I tried to submit the python file with <code>spark-submit</code> command. Second, I wanted to try different cloud platform, and found out that Confluent Cloud performs reall well. For the Spark Streaming, Databricks was used since it is well organized and easy to setup for Spark Streaming and have Delta Lake.</p>
 <h2 id="5-what-is-spark-streaming">5. What is Spark Streaming?</h2>
 <ul>
 <li>Data is continuously flowing in so that it&rsquo;s a bit different than working with batch data.</li>

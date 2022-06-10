@@ -19,8 +19,7 @@ The aim of the Starbucks Twitter Sentimental Analysis project is to build end-to
 
 
 ## 2. Happy Path
-* connect with big data streams to ingest twtiter data. Azure event hub -> azure stream analytics and dump into datalake gen2.  
-then azure synapse analytics and connect to azure machine learning for sentimental analysis 
+* connect with big data streams to ingest twtiter data. 
 
 {{< admonition type=note title="Script Planning" open=false >}}
 * producer.py
@@ -43,6 +42,7 @@ Twitter - Kafka - Spark Streaming
 
 ### Option 2 
 - local environment
+
 Twitter - Socket - Spark Streaming 
 
 ### Option 3.
@@ -51,7 +51,7 @@ Twitter - Kafka - Spark Streaming
  
 
 
-After the trials and concerns, I decided to go for Option 3. There are three reasons, first, I faced some struggles while submiting python file for spark streaming. My local environment kept giving me errors whenever I tried to submit the python file with `spark-submit` code. Second, I wanted to try different cloud platform, and found out that Confluent Cloud perform reall well. For the Spark Streaming, Databricks was used since it is well organized and easy setup for Spark Streaming and have Delta Lake. 
+After tons of trials&errors and concerns, I decided to go for Option 3. There are few reasons, first, I faced some struggles while submiting python file for spark streaming. My local environment kept giving me errors whenever I tried to submit the python file with `spark-submit` command. Second, I wanted to try different cloud platform, and found out that Confluent Cloud performs reall well. For the Spark Streaming, Databricks was used since it is well organized and easy to setup for Spark Streaming and have Delta Lake. 
 
 
 ## 5. What is Spark Streaming?
