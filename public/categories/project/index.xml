@@ -24,14 +24,6 @@ Step 1. Twitter API Credentials As we performed in the previous post, we need to
  Brand sentiment analysis is, to put it simply, a way of determining the general attitude toward your brand, product, or service.]]></description>
 </item>
 <item>
-    <title>[SongPlz-Bot] 3. ETL Steps</title>
-    <link>http://youheekil.github.io/project2-3.-etl-steps/</link>
-    <pubDate>Fri, 27 May 2022 00:00:00 &#43;0000</pubDate>
-    <author>Youhee</author>
-    <guid>http://youheekil.github.io/project2-3.-etl-steps/</guid>
-    <description><![CDATA[Steps 1. Set up virtual environment 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15  where python # find the location of python  pip install pipenv # install pipenv which is virtual environment pip list mkdir &lt;project folder&gt; &amp;&amp; cd &lt;project folder&gt; # the ending of the path would be `/python.exe`  pipenv shell --python &lt;the path of python version you want to use&gt; pip list # list of packages  pipenv --venv # path to version environment  pipenv install pandas pip list # check if pandas is installed  # start the created virtual env pipenv shell   2.]]></description>
-</item>
-<item>
     <title>[SongPlz-Bot] 2. Severless &amp; Data Ingestion &amp; Recommender System</title>
     <link>http://youheekil.github.io/project2-2.-songplz-bot/</link>
     <pubDate>Mon, 23 May 2022 00:00:00 &#43;0000</pubDate>

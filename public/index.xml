@@ -34,14 +34,6 @@ Step 1. Twitter API Credentials As we performed in the previous post, we need to
     <description><![CDATA[TextBlob The TextBlob method produces polarity and subjectivity score. The polarity score which falls between [-1.0, 1.0] indicates a sensentivity from the sentence. If the score is below zero (0.0), sensitivity of the sentence is negativity. While the score is above zero (0.0), then the sensitivity of the sentence is positive. The subjectivity score which falls between [0.0, 1.0] identifies whether the sentence is objective or subjectivity. If the score is close to 0.]]></description>
 </item>
 <item>
-    <title>[SongPlz-Bot] 3. ETL Steps</title>
-    <link>http://youheekil.github.io/project2-3.-etl-steps/</link>
-    <pubDate>Fri, 27 May 2022 00:00:00 &#43;0000</pubDate>
-    <author>Youhee</author>
-    <guid>http://youheekil.github.io/project2-3.-etl-steps/</guid>
-    <description><![CDATA[Steps 1. Set up virtual environment 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15  where python # find the location of python  pip install pipenv # install pipenv which is virtual environment pip list mkdir &lt;project folder&gt; &amp;&amp; cd &lt;project folder&gt; # the ending of the path would be `/python.exe`  pipenv shell --python &lt;the path of python version you want to use&gt; pip list # list of packages  pipenv --venv # path to version environment  pipenv install pandas pip list # check if pandas is installed  # start the created virtual env pipenv shell   2.]]></description>
-</item>
-<item>
     <title>[SongPlz-Bot] 2. Severless &amp; Data Ingestion &amp; Recommender System</title>
     <link>http://youheekil.github.io/project2-2.-songplz-bot/</link>
     <pubDate>Mon, 23 May 2022 00:00:00 &#43;0000</pubDate>
@@ -96,6 +88,16 @@ Program Details During the program, we completed two courses with two projects.]
     <description><![CDATA[Udacity Program   MLOps   I participated Machine Learning DevOps Engineer program in Udacity (Certification).
 The program was extraordinary great, providing handful hands-on projects with the detailed and accurate human feedback. MLOps was whole different world and opened my eyes to the world of DevOps and machine learning in production level.
 The program is consisted of four projects, and each project covered different technology skills and tools. The most important thing the program emphasized was clean code principes, such as refactoring, handling errors, unit-testing, logging, and addressing.]]></description>
+</item>
+<item>
+    <title>Data Engineer Roadmap</title>
+    <link>http://youheekil.github.io/data-engineer-roadmap/</link>
+    <pubDate>Mon, 16 May 2022 00:00:00 &#43;0000</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/data-engineer-roadmap/</guid>
+    <description><![CDATA[Data Engineer Roadmap   The roadmap aims to give a complete picture of the modern data engineering landscape and serve as a study guide for aspiring data engineers.
+ Based on the provided Data Engineer Roadmap, I would like to dig into what we need to know to be a data engineer.
+  Data Engineer Roadmap   Section 1. CS fundamentals  Basic terminal usage Data structures &amp; algorithms APIs REST Structured vs unstructured data Linux  CLI Vim Shell scripting Cronjobs   OS  How does the computer work?]]></description>
 </item>
 </channel>
 </rss>

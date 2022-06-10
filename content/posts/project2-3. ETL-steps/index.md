@@ -1,7 +1,7 @@
 ---
 title: "[SongPlz-Bot] 3. ETL Steps"
 date: 2022-05-27
-draft: false
+draft: true
 author: Youhee
 images: []
 categories: ["Project"]
