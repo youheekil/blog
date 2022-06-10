@@ -5,7 +5,7 @@ draft: false
 author: Youhee
 images: []
 tags: ["Sentiment-Analysis", "kafka", "spark-streaming" ]
-categories: ["Project"]
+categories: ["Project", "Sentiment-Analysis"]
 
 lightgallery: true
 

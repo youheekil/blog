@@ -49,21 +49,6 @@ Step 1. Twitter API Credentials As we performed in the previous post, we need to
 In this post, I am going to perform an effective song recommendataion system with the combination of two user&rsquo;s informations - mood and favorite artist.]]></description>
 </item>
 <item>
-    <title>Algorithm Pattern</title>
-    <link>http://youheekil.github.io/algorithm-pattern/</link>
-    <pubDate>Mon, 23 May 2022 00:00:00 &#43;0000</pubDate>
-    <author>Youhee</author>
-    <guid>http://youheekil.github.io/algorithm-pattern/</guid>
-    <description><![CDATA[https://www.educative.io/blog/top-data-engineer-interview-questions-and-tips#programming-languages https://www.codinginterview.com/interview-roadmap
-0. Brushing up Python  How to read/write from/to files  ​
- How to read input from the console  ​
- How to split strings  ​
- Is string length a function or a property (answer: it doesn’t matter, but still reflects poorly on you)  ​
-  How to declare and use 2D arrays
-  Process command line arguments
-  Remember to revise topics like:]]></description>
-</item>
-<item>
     <title>[SongPlz-Bot] 1. Slack and Spotify API</title>
     <link>http://youheekil.github.io/project2-1.-songplz-bot/</link>
     <pubDate>Sun, 22 May 2022 00:00:00 &#43;0000</pubDate>
@@ -99,6 +84,16 @@ There are many cloud services available providing FaaS such as AWS Lambda, Azure
     <guid>http://youheekil.github.io/udacity-dataengineer-datastreaming/</guid>
     <description><![CDATA[Udacity Program   Kafka (figure)   Technologies used  Apache Kafka, Kafka Connect, KSQL, Faust Stream Processing, Spark Structured Streaming   About The Nanodegree Data Streaming skill was gained to be prepared for the next era of data engineering. Learned how to analyze data in real-time using Apache Kafka and Spark, and build applications to process live insights from data at scale.
 Program Details During the program, we completed two courses with two projects.]]></description>
+</item>
+<item>
+    <title>[Udacity] MLOps</title>
+    <link>http://youheekil.github.io/udacity-mlops/</link>
+    <pubDate>Thu, 19 May 2022 13:38:13 &#43;0900</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/udacity-mlops/</guid>
+    <description><![CDATA[Udacity Program   MLOps   I participated Machine Learning DevOps Engineer program in Udacity (Certification).
+The program was extraordinary great, providing handful hands-on projects with the detailed and accurate human feedback. MLOps was whole different world and opened my eyes to the world of DevOps and machine learning in production level.
+The program is consisted of four projects, and each project covered different technology skills and tools. The most important thing the program emphasized was clean code principes, such as refactoring, handling errors, unit-testing, logging, and addressing.]]></description>
 </item>
 </channel>
 </rss>

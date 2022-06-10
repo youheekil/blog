@@ -1,7 +1,7 @@
 ---
 title: "Algorithm Pattern"
 date: 2022-05-23
-draft: false
+draft: true
 author: Youhee
 images: []
 tags: ['python']
