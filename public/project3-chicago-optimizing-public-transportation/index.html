@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Project - Chicago Optimizng Public Transportation - YOUHEE</title><meta name="Description" content=""><meta property="og:title" content="Project - Chicago Optimizng Public Transportation" />
+<meta property="og:description" content="Public Transit Status with Apache Kafka In this project, we constructed a streaming event pipeline around Apache Kafka and its ecosystem. Using public data from the Chicago Transit Authority we constructed an event pipeline around Kafka that allows us to simulate and display the status of train lines in real time.
+When the project is complete, you will be able to monitor a website to watch trains move from station to station." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://youheekil.github.io/project3-chicago-optimizing-public-transportation/" />
+<meta property="og:image" content="http://youheekil.github.io/logo.png"/>
+<meta property="article:published_time" content="2022-04-10T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-04-10T00:00:00+00:00" /><meta property="og:site_name" content="YOUHEE" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://youheekil.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Project - Chicago Optimizng Public Transportation"/>
+<meta name="twitter:description" content="Public Transit Status with Apache Kafka In this project, we constructed a streaming event pipeline around Apache Kafka and its ecosystem. Using public data from the Chicago Transit Authority we constructed an event pipeline around Kafka that allows us to simulate and display the status of train lines in real time.
+When the project is complete, you will be able to monitor a website to watch trains move from station to station."/>
+<meta name="application-name" content="YOUHEE">
+<meta name="apple-mobile-web-app-title" content="YOUHEE"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://youheekil.github.io/project3-chicago-optimizing-public-transportation/" /><link rel="next" href="http://youheekil.github.io/data-engineer-roadmap/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Project - Chicago Optimizng Public Transportation",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/youheekil.github.io\/project3-chicago-optimizing-public-transportation\/"
+        },"genre": "posts","wordcount":  1473 ,
+        "url": "http:\/\/youheekil.github.io\/project3-chicago-optimizing-public-transportation\/","datePublished": "2022-04-10T00:00:00+00:00","dateModified": "2022-04-10T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "YOUHEE","logo": "http:\/\/youheekil.github.io\/favicon.ico"},"author": {
+                "@type": "Person",
+                "name": "Youhee"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="YOUHEE"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        data-srcset="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 1.5x, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 2x"
+        data-sizes="auto"
+        alt="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        title="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="YOUHEE"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        data-srcset="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 1.5x, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 2x"
+        data-sizes="auto"
+        alt="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        title="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Project - Chicago Optimizng Public Transportation</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Youhee</a></span>&nbsp;<span class="post-category">included in <a href="/categories/project/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Project</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-04-10">2022-04-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1473 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#prerequisites">Prerequisites</a></li>
+    <li><a href="#description">Description</a>
+      <ul>
+        <li><a href="#step-1-create-kafka-producers">Step 1: Create Kafka Producers</a></li>
+        <li><a href="#step-2-configure-kafka-rest-proxy-producer">Step 2: Configure Kafka REST Proxy Producer</a></li>
+        <li><a href="#step-3-configure-kafka-connect">Step 3: Configure Kafka Connect</a></li>
+        <li><a href="#step-4-configure-the-faust-stream-processor">Step 4: Configure the Faust Stream Processor</a>
+          <ul>
+            <li><a href="#watch-out">Watch Out!</a></li>
+          </ul>
+        </li>
+        <li><a href="#step-5-configure-the-ksql-table">Step 5: Configure the KSQL Table</a>
+          <ul>
+            <li><a href="#tips">Tips</a></li>
+          </ul>
+        </li>
+        <li><a href="#step-6-create-kafka-consumers">Step 6: Create Kafka Consumers</a></li>
+        <li><a href="#documentation">Documentation</a></li>
+      </ul>
+    </li>
+    <li><a href="#directory-layout">Directory Layout</a></li>
+    <li><a href="#running-and-testing">Running and Testing</a>
+      <ul>
+        <li><a href="#running-the-simulation">Running the Simulation</a>
+          <ul>
+            <li><a href="#to-run-the-producer">To run the <code>producer</code>:</a></li>
+            <li><a href="#to-run-the-faust-stream-processing-application">To run the Faust Stream Processing Application:</a></li>
+            <li><a href="#to-run-the-ksql-creation-script">To run the KSQL Creation Script:</a></li>
+            <li><a href="#to-run-the-consumer">To run the <code>consumer</code>:</a></li>
+          </ul>
+        </li>
+        <li><a href="#whole-simulation-process">Whole Simulation Process</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="public-transit-status-with-apache-kafka">Public Transit Status with Apache Kafka</h1>
+<p>In this project, we constructed a streaming event pipeline around Apache Kafka and its ecosystem. Using public data from the <a href="https://www.transitchicago.com/data/" target="_blank" rel="noopener noreffer">Chicago Transit Authority</a> we constructed an event pipeline around Kafka that allows us to simulate and display the status of train lines in real time.</p>
+<p>When the project is complete, you will be able to monitor a website to watch trains move from station to station.</p>
+<p>Check the source code in <a href="https://github.com/youheekil/udacity-data-streaming/tree/main/Project%20-%20Optimizing%20Public%20Transportation" target="_blank" rel="noopener noreffer">here</a></p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>The following are required to complete this project:</p>
+<ul>
+<li>Docker</li>
+<li>Python 3.7</li>
+</ul>
+<h2 id="description">Description</h2>
+<p>The Chicago Transit Authority (CTA) has asked us to develop a dashboard displaying system status for its commuters. We have decided to use Kafka and ecosystem tools like REST Proxy and Kafka Connect to accomplish this task.</p>
+<p>Our architecture will look like so:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="images/CTA_solution_diagram.png"
+        data-srcset="images/CTA_solution_diagram.png, images/CTA_solution_diagram.png 1.5x, images/CTA_solution_diagram.png 2x"
+        data-sizes="auto"
+        alt="images/CTA_solution_diagram.png"
+        title="Project Architecture" /></p>
+<h3 id="step-1-create-kafka-producers">Step 1: Create Kafka Producers</h3>
+<p>The first step in our plan is to configure the train stations to emit some of the events that we need. The CTA has placed a sensor on each side of every train station that can be programmed to take an action whenever a train arrives at the station.</p>
+<p>To accomplish this, you must complete the following tasks:</p>
+<ol>
+<li>Complete the code in <code>producers/models/producer.py</code></li>
+<li>Define a <code>value</code> schema for the arrival event in <code>producers/models/schemas/arrival_value.json</code> with the following attributes
+<ul>
+<li><code>station_id</code></li>
+<li><code>train_id</code></li>
+<li><code>direction</code></li>
+<li><code>line</code></li>
+<li><code>train_status</code></li>
+<li><code>prev_station_id</code></li>
+<li><code>prev_direction</code></li>
+</ul>
+</li>
+<li>Complete the code in <code>producers/models/station.py</code> so that:
+<ul>
+<li>A topic is created for each station in Kafka to track the arrival events</li>
+<li>The station emits an <code>arrival</code> event to Kafka whenever the <code>Station.run()</code> function is called.</li>
+<li>Ensure that events emitted to kafka are paired with the Avro <code>key</code> and <code>value</code> schemas</li>
+</ul>
+</li>
+<li>Define a <code>value</code> schema for the turnstile event in <code>producers/models/schemas/turnstile_value.json</code> with the following attributes
+<ul>
+<li><code>station_id</code></li>
+<li><code>station_name</code></li>
+<li><code>line</code></li>
+</ul>
+</li>
+<li>Complete the code in <code>producers/models/turnstile.py</code> so that:
+<ul>
+<li>A topic is created for each turnstile for each station in Kafka to track the turnstile events</li>
+<li>The station emits a <code>turnstile</code> event to Kafka whenever the <code>Turnstile.run()</code> function is called.</li>
+<li>Ensure that events emitted to kafka are paired with the Avro <code>key</code> and <code>value</code> schemas</li>
+</ul>
+</li>
+</ol>
+<h3 id="step-2-configure-kafka-rest-proxy-producer">Step 2: Configure Kafka REST Proxy Producer</h3>
+<p>Our partners at the CTA have asked that we also send weather readings into Kafka from their weather hardware. Unfortunately, this hardware is old and we cannot use the Python Client Library due to hardware restrictions. Instead, we are going to use HTTP REST to send the data to Kafka from the hardware using Kafka&rsquo;s REST Proxy.</p>
+<p>To accomplish this, you must complete the following tasks:</p>
+<ol>
+<li>Define a <code>value</code> schema for the weather event in <code>producers/models/schemas/weather_value.json</code> with the following attributes
+<ul>
+<li><code>temperature</code></li>
+<li><code>status</code></li>
+</ul>
+</li>
+<li>Complete the code in <code>producers/models/weather.py</code> so that:
+<ul>
+<li>A topic is created for weather events</li>
+<li>The weather model emits <code>weather</code> event to Kafka REST Proxy whenever the <code>Weather.run()</code> function is called.
+<ul>
+<li><strong>NOTE</strong>: When sending HTTP requests to Kafka REST Proxy, be careful to include the correct <code>Content-Type</code>. Pay close attention to the <a href="https://docs.confluent.io/current/kafka-rest/api.html#post--topics-%28string-topic_name%29" target="_blank" rel="noopener noreffer">examples in the documentation</a> for more information.</li>
+</ul>
+</li>
+<li>Ensure that events emitted to REST Proxy are paired with the Avro <code>key</code> and <code>value</code> schemas</li>
+</ul>
+</li>
+</ol>
+<h3 id="step-3-configure-kafka-connect">Step 3: Configure Kafka Connect</h3>
+<p>Finally, we need to extract station information from our PostgreSQL database into Kafka. We&rsquo;ve decided to use the <a href="https://docs.confluent.io/current/connect/kafka-connect-jdbc/source-connector/index.html" target="_blank" rel="noopener noreffer">Kafka JDBC Source Connector</a>.</p>
+<p>To accomplish this, you must complete the following tasks:</p>
+<ol>
+<li>Complete the code and configuration in <code>producers/connectors.py</code>
+<ul>
+<li>Please refer to the <a href="https://docs.confluent.io/current/connect/kafka-connect-jdbc/source-connector/source_config_options.html" target="_blank" rel="noopener noreffer">Kafka Connect JDBC Source Connector Configuration Options</a> for documentation on the options you must complete.</li>
+<li>You can run this file directly to test your connector, rather than running the entire simulation.</li>
+<li>Make sure to use the <a href="http://localhost:8084" target="_blank" rel="noopener noreffer">Landoop Kafka Connect UI</a> and <a href="http://localhost:8085" target="_blank" rel="noopener noreffer">Landoop Kafka Topics UI</a> to check the status and output of the Connector.</li>
+<li>To delete a misconfigured connector: <code>CURL -X DELETE localhost:8083/connectors/stations</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="step-4-configure-the-faust-stream-processor">Step 4: Configure the Faust Stream Processor</h3>
+<p>We will leverage Faust Stream Processing to transform the raw Stations table that we ingested from Kafka Connect. The raw format from the database has more data than we need, and the line color information is not conveniently configured. To remediate this, we&rsquo;re going to ingest data from our Kafka Connect topic, and transform the data.</p>
+<p>To accomplish this, you must complete the following tasks:</p>
+<ol>
+<li>Complete the code and configuration in `consumers/faust_stream.py</li>
+</ol>
+<h4 id="watch-out">Watch Out!</h4>
+<p>You must run this Faust processing application with the following command:</p>
+<p><code>faust -A faust_stream worker -l info</code></p>
+<h3 id="step-5-configure-the-ksql-table">Step 5: Configure the KSQL Table</h3>
+<p>Next, we will use KSQL to aggregate turnstile data for each of our stations. Recall that when we produced turnstile data, we simply emitted an event, not a count. What would make this data more useful would be to summarize it by station so that downstream applications always have an up-to-date count</p>
+<p>To accomplish this, you must complete the following tasks:</p>
+<ol>
+<li>Complete the queries in <code>consumers/ksql.py</code></li>
+</ol>
+<h4 id="tips">Tips</h4>
+<ul>
+<li>The KSQL CLI is the best place to build your queries. Try <code>ksql</code> in your workspace to enter the CLI.</li>
+<li>You can run this file on its own simply by running <code>python ksql.py</code></li>
+<li>Made a mistake in table creation? <code>DROP TABLE &lt;your_table&gt;</code>. If the CLI asks you to terminate a running query, you can <code>TERMINATE &lt;query_name&gt;</code></li>
+</ul>
+<h3 id="step-6-create-kafka-consumers">Step 6: Create Kafka Consumers</h3>
+<p>With all of the data in Kafka, our final task is to consume the data in the web server that is going to serve the transit status pages to our commuters.</p>
+<p>To accomplish this, you must complete the following tasks:</p>
+<ol>
+<li>Complete the code in <code>consumers/consumer.py</code></li>
+<li>Complete the code in <code>consumers/models/line.py</code></li>
+<li>Complete the code in <code>consumers/models/weather.py</code></li>
+<li>Complete the code in <code>consumers/models/station.py</code></li>
+</ol>
+<h3 id="documentation">Documentation</h3>
+<p>In addition to the course content you have already reviewed, you may find the following examples and documentation helpful in completing this assignment:</p>
+<ul>
+<li><a href="https://docs.confluent.io/current/clients/confluent-kafka-python/#" target="_blank" rel="noopener noreffer">Confluent Python Client Documentation</a></li>
+<li><a href="https://github.com/confluentinc/confluent-kafka-python#usage" target="_blank" rel="noopener noreffer">Confluent Python Client Usage and Examples</a></li>
+<li><a href="https://docs.confluent.io/current/kafka-rest/api.html#post--topics-%28string-topic_name%29" target="_blank" rel="noopener noreffer">REST Proxy API Reference</a></li>
+<li><a href="https://docs.confluent.io/current/connect/kafka-connect-jdbc/source-connector/source_config_options.html" target="_blank" rel="noopener noreffer">Kafka Connect JDBC Source Connector Configuration Options</a></li>
+</ul>
+<h2 id="directory-layout">Directory Layout</h2>
+<p>The project consists of two main directories, <code>producers</code> and <code>consumers</code>.</p>
+<p>The following directory layout indicates the files that the student is responsible for modifying by adding a <code>*</code> indicator. Instructions for what is required are present as comments in each file.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">* - Indicates that the files I completed the code in this file. Other files are prepared by Udacity beforehand. 
+
+
+├── consumers
+│   ├── consumer.py *
+│   ├── faust_stream.py *
+│   ├── ksql.py *
+│   ├── models
+│   │   ├── lines.py
+│   │   ├── line.py *
+│   │   ├── station.py *
+│   │   └── weather.py *
+│   ├── requirements.txt
+│   ├── server.py
+│   ├── topic_check.py
+│   └── templates
+│       └── status.html
+└── producers
+    ├── connector.py *
+    ├── models
+    │   ├── line.py
+    │   ├── producer.py *
+    │   ├── schemas
+    │   │   ├── arrival_key.json
+    │   │   ├── arrival_value.json *
+    │   │   ├── turnstile_key.json
+    │   │   ├── turnstile_value.json *
+    │   │   ├── weather_key.json
+    │   │   └── weather_value.json *
+    │   ├── station.py *
+    │   ├── train.py
+    │   ├── turnstile.py *
+    │   ├── turnstile_hardware.py
+    │   └── weather.py *
+    ├── requirements.txt
+    └── simulation.py
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="running-and-testing">Running and Testing</h2>
+<p>To run the simulation, you must first start up the Kafka ecosystem on their machine utilizing Docker Compose.</p>
+<p><code>%&gt; docker-compose up</code></p>
+<h3 id="running-the-simulation">Running the Simulation</h3>
+<p>There are two pieces to the simulation, the <code>producer</code> and <code>consumer</code>. As you develop each piece of the code, it is recommended that you only run one piece of the project at a time.</p>
+<p>However, when you are ready to verify the end-to-end system prior to submission, it is critical that you open a terminal window for each piece and run them at the same time. <strong>If you do not run both the producer and consumer at the same time you will not be able to successfully complete the project</strong>.</p>
+<h4 id="to-run-the-producer">To run the <code>producer</code>:</h4>
+<ol>
+<li><code>cd producers</code></li>
+<li><code>virtualenv venv</code></li>
+<li><code>. venv/bin/activate</code></li>
+<li><code>pip install -r requirements.txt</code></li>
+<li><code>python simulation.py</code></li>
+</ol>
+<p>Once the simulation is running, you may hit <code>Ctrl+C</code> at any time to exit.</p>
+<h4 id="to-run-the-faust-stream-processing-application">To run the Faust Stream Processing Application:</h4>
+<ol>
+<li><code>cd consumers</code></li>
+<li><code>virtualenv venv</code></li>
+<li><code>. venv/bin/activate</code></li>
+<li><code>pip install -r requirements.txt</code></li>
+<li><code>faust -A faust_stream worker -l info</code></li>
+</ol>
+<h4 id="to-run-the-ksql-creation-script">To run the KSQL Creation Script:</h4>
+<ol>
+<li><code>cd consumers</code></li>
+<li><code>virtualenv venv</code></li>
+<li><code>. venv/bin/activate</code></li>
+<li><code>pip install -r requirements.txt</code></li>
+<li><code>python ksql.py</code></li>
+</ol>
+<h4 id="to-run-the-consumer">To run the <code>consumer</code>:</h4>
+<p>** NOTE **: Do not run the consumer until you have reached Step 6!</p>
+<ol>
+<li><code>cd consumers</code></li>
+<li><code>virtualenv venv</code></li>
+<li><code>. venv/bin/activate</code></li>
+<li><code>pip install -r requirements.txt</code></li>
+<li><code>python server.py</code></li>
+</ol>
+<h3 id="whole-simulation-process">Whole Simulation Process</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kafka-topics --list --zookeeper localhost:2181
+<span class="nb">cd</span> producers
+python connector.py
+<span class="nb">cd</span> ../
+kafka-console-consumer --bootstrap-server localhost:9092 --topic postgre_connect_stations --from-beginning
+<span class="nb">cd</span> consumers
+faust -A faust_stream worker -l info
+
+<span class="nb">cd</span> ../
+kafka-console-consumer --bootstrap-server localhost:9092 --topic org.chicago.cta.weather.v1 --from-beginning
+
+<span class="nb">cd</span> producers
+python simulation.py
+
+<span class="nb">cd</span> consumers
+python server.py
+
+
+<span class="c1"># delete topics</span>
+kafka-topics --zookeeper localhost:2181 --delete --topic arrival.station.*
+kafka-topics --zookeeper localhost:2181 --delete --topic turnstile_station
+kafka-topics --zookeeper localhost:2181 --delete --topic org.chicago.cta.weather.v1
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-04-10</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/project3-chicago-optimizing-public-transportation/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://youheekil.github.io/project3-chicago-optimizing-public-transportation/" data-title="Project - Chicago Optimizng Public Transportation"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://youheekil.github.io/project3-chicago-optimizing-public-transportation/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://youheekil.github.io/project3-chicago-optimizing-public-transportation/" data-title="Project - Chicago Optimizng Public Transportation"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://youheekil.github.io/project3-chicago-optimizing-public-transportation/" data-title="Project - Chicago Optimizng Public Transportation"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://youheekil.github.io/project3-chicago-optimizing-public-transportation/" data-title="Project - Chicago Optimizng Public Transportation"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+            <a href="/data-engineer-roadmap/" class="next" rel="next" title="Data Engineer Roadmap">Data Engineer Roadmap<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.79.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Youhee Kil</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/twemoji/twemoji.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/index.umd.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"YOUHEE","id-2":"YOUHEE"},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"},"twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

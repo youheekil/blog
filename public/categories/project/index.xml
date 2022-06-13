@@ -50,5 +50,14 @@ In this post, I am going to perform an effective song recommendataion system wit
     <description><![CDATA[SongPlz Bot - Architecture Planning 1. Aim The aim of this SongPlz Bot project (Slack Song Recommendation Bot) is to build a data pipeline to create a chatting bot for song recommendation with Serverless architecture which is a way to develop and run applications and services without managing infrastructure (AWS). If you are still unsure about serverless architecture, please click here.
 There are many cloud services available providing FaaS such as AWS Lambda, Azure Functions, and Google Cloud Function.]]></description>
 </item>
+<item>
+    <title>Project - Chicago Optimizng Public Transportation</title>
+    <link>http://youheekil.github.io/project3-chicago-optimizing-public-transportation/</link>
+    <pubDate>Sun, 10 Apr 2022 00:00:00 &#43;0000</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/project3-chicago-optimizing-public-transportation/</guid>
+    <description><![CDATA[Public Transit Status with Apache Kafka In this project, we constructed a streaming event pipeline around Apache Kafka and its ecosystem. Using public data from the Chicago Transit Authority we constructed an event pipeline around Kafka that allows us to simulate and display the status of train lines in real time.
+When the project is complete, you will be able to monitor a website to watch trains move from station to station.]]></description>
+</item>
 </channel>
 </rss>
