@@ -1,5 +1,5 @@
 ---
-title: "Project - Chicago Optimizng Public Transportation"
+title: "[Chicago Optimizng Public Transportation] - Project Overview"
 date: 2022-04-10
 draft: false
 author: Youhee
@@ -37,7 +37,10 @@ The Chicago Transit Authority (CTA) has asked us to develop a dashboard displayi
 
 Our architecture will look like so:
 
-![Project Architecture](images/CTA_solution_diagram.png)
+
+{{< figure src="CTA_solution_diagram.png" title="Project Diagram" >}}
+
+
 
 ### Step 1: Create Kafka Producers
 The first step in our plan is to configure the train stations to emit some of the events that we need. The CTA has placed a sensor on each side of every train station that can be programmed to take an action whenever a train arrives at the station.
