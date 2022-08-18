@@ -1,4 +1,4 @@
-# [Chicago Optimizng Public Transportation] - Project Overview
+# [Chicago Optimizng Public Transportation]
 
 
 # Public Transit Status with Apache Kafka
@@ -213,7 +213,7 @@ Once the simulation is running, you may hit `Ctrl+C` at any time to exit.
 
 #### To run the `consumer`:
 
-** NOTE **: Do not run the consumer until you have reached Step 6!
+**NOTE**: Do not run the consumer until you have reached **Step 6**!
 1. `cd consumers`
 2. `virtualenv venv`
 3. `. venv/bin/activate`

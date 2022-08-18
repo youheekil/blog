@@ -1,4 +1,4 @@
-# [Starbucks Twitter Sentiment Analysis] 1. Instruction
+# [Starbucks Twitter Sentiment Analysis] Instructions and Spark NLP
 
 # Setup with Confluent Kafka, Spark, Delta Lake with Databricks and AWS
 
@@ -290,7 +290,7 @@ prep_pipeline_model = prep_pipeline.fit(empty_df)
 result = prep_pipeline_model.transform(tweet_df)
 ```
 The pipeline is followed by the procedure as below. 
-{{< figure src="NLP.png" title="NLP pipeline in Spark" >}}
+{{< figure src="sparknlp.png" title="NLP pipeline in Spark" >}}
 
 
 

@@ -1,5 +1,5 @@
 ---
-title: "[Starbucks Twitter Sentiment Analysis] 0. Architecture Planning"
+title: "[Starbucks Twitter Sentiment Analysis] Architecture Planning"
 date: 2022-06-06
 draft: false
 author: Youhee

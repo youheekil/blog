@@ -1,4 +1,4 @@
-# [Starbucks Twitter Sentiment Analysis] 0. Architecture Planning
+# [Starbucks Twitter Sentiment Analysis] Architecture Planning
 
 
 # Architecture Planning

@@ -5,7 +5,7 @@
         <description>Sentiment-Analysis - Category - YOUHEE</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>youhee.kil@gmail.com (Youhee Kil)</managingEditor>
             <webMaster>youhee.kil@gmail.com (Youhee Kil)</webMaster><lastBuildDate>Mon, 06 Jun 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://youheekil.github.io/categories/sentiment-analysis/" rel="self" type="application/rss+xml" /><item>
-    <title>[Starbucks Twitter Sentiment Analysis] 0. Architecture Planning</title>
+    <title>[Starbucks Twitter Sentiment Analysis] Architecture Planning</title>
     <link>http://youheekil.github.io/project1-0.-starbucks-twitter-sentimental-analysis/</link>
     <pubDate>Mon, 06 Jun 2022 00:00:00 &#43;0000</pubDate>
     <author>Youhee</author>
