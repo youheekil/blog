@@ -117,7 +117,7 @@ FROM sales_data
 GROUP BY CUSTOMERNAME
 ```
 
-### Categorize the RFM 
+### 4. Categorize the RFM 
 ```sql
 WITH rfm AS (
   SELECT 
@@ -149,7 +149,7 @@ FROM rfm_calc C
 
 ```
 
-### Create TEMP Table
+### 5. Create TEMP Table
 
 ```sql
 DROP TABLE IF EXISTS #rfm --for global table ##rfm
@@ -196,7 +196,7 @@ SELECT CUSTOMERNAME, rfm_recency, rfm_freqeuncy, rfm_monetary,
 FROM #rfm
 ```
 
-### What products codes are sold together?
+### 6. What products codes are sold together?
 ```SQL
 SELECT DISTINCT ORDERNUMBER, STUFF(
 
