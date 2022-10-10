@@ -298,6 +298,16 @@ The pipeline is followed by the procedure as below.
 You can connect databricks notebook with Github for the revision history. The procedure is described in [here](https://www.youtube.com/watch?v=O-DpRnJsLoQ)
 
 
+
+
+
+## Jupyter Notebook 
+
+<iframe src="https://nbviewer.org/github/youheekil/twitter-sentiment-analysis/blob/main/notebooks/WordCloud.ipynb" width="100%" height="1000" scrolling ="yes" frameboard = "0">
+</iframe>
+
+
+
 ## Reference 
 * https://github.com/scoyne2/kafka_spark_streams
 * https://blogit.michelin.io/kafka-to-delta-lake-using-apache-spark-streaming-avro/

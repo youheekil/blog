@@ -4,9 +4,30 @@
         <link>http://youheekil.github.io/</link>
         <description>YOUHEE</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>youhee.kil@gmail.com (Youhee Kil)</managingEditor>
-            <webMaster>youhee.kil@gmail.com (Youhee Kil)</webMaster><lastBuildDate>Wed, 08 Jun 2022 00:00:00 &#43;0000</lastBuildDate>
+            <webMaster>youhee.kil@gmail.com (Youhee Kil)</webMaster><lastBuildDate>Tue, 26 Jul 2022 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="http://youheekil.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>[Machine Learning] Basic Math for ML with Python</title>
+    <link>http://youheekil.github.io/machine-learning-basic-math/</link>
+    <pubDate>Tue, 26 Jul 2022 00:00:00 &#43;0000</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/machine-learning-basic-math/</guid>
+    <description><![CDATA[Machine learning is nothing but a geometry problem ! All data is the same. Understanding geometry is very important to solve machine learning problems.
+ [Numpy] Basic Linear Algebra Linear algebra, mathematical discipline that deals with vectors and matrices and, more generally, with vector spaces and linear transformations (Britannica)
+In this lecture, you will learn
+ Scala, Vector, Array, Tensor Dot product &amp; Norm Multiplication &amp; Transpose &amp; Invertible matrix Linear Transformation Eigen Value &amp; Eigen Vector Cosine Similarity  and perform these with Numpy]]></description>
+</item>
+<item>
+    <title>RFM Analysis with SQL &amp; Power BI (DAX)</title>
+    <link>http://youheekil.github.io/data-analysis-with-power-bi/</link>
+    <pubDate>Fri, 15 Jul 2022 00:00:00 &#43;0000</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/data-analysis-with-power-bi/</guid>
+    <description><![CDATA[What is RFM? RFM is a technique that can perform Customer Segmentation to determine customer&rsquo;s buying behavior. Company uses the RFM metric as a customer behavior segmentation indicator to improve marketing strategies for revenue increases by reactivating customers to more royal.
+  R(Recency) : The last time the customer made a purchase. The smaller the number, the better.
+  F(Frequency) : Number of transactions. The bigger the number, the better]]></description>
+</item>
+<item>
     <title>[Starbucks Twitter Sentiment Analysis] Instructions and Spark NLP</title>
     <link>http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/</link>
     <pubDate>Wed, 08 Jun 2022 00:00:00 &#43;0000</pubDate>
@@ -78,26 +99,6 @@ There are many cloud services available providing FaaS such as AWS Lambda, Azure
     <guid>http://youheekil.github.io/udacity-dataengineer-datastreaming/</guid>
     <description><![CDATA[Udacity Program   Kafka (figure)   Technologies used  Apache Kafka, Kafka Connect, KSQL, Faust Stream Processing, Spark Structured Streaming   About The Nanodegree Data Streaming skill was gained to be prepared for the next era of data engineering. Learned how to analyze data in real-time using Apache Kafka and Spark, and build applications to process live insights from data at scale.
 Program Details During the program, we completed two courses with two projects.]]></description>
-</item>
-<item>
-    <title>[Udacity] MLOps</title>
-    <link>http://youheekil.github.io/udacity-mlops/</link>
-    <pubDate>Thu, 19 May 2022 13:38:13 &#43;0900</pubDate>
-    <author>Youhee</author>
-    <guid>http://youheekil.github.io/udacity-mlops/</guid>
-    <description><![CDATA[Udacity Program   MLOps   I participated Machine Learning DevOps Engineer program in Udacity (Certification).
-The program was extraordinary great, providing handful hands-on projects with the detailed and accurate human feedback. MLOps was whole different world and opened my eyes to the world of DevOps and machine learning in production level.
-The program is consisted of four projects, and each project covered different technology skills and tools. The most important thing the program emphasized was clean code principes, such as refactoring, handling errors, unit-testing, logging, and addressing.]]></description>
-</item>
-<item>
-    <title>Data Engineer Roadmap</title>
-    <link>http://youheekil.github.io/data-engineer-roadmap/</link>
-    <pubDate>Mon, 16 May 2022 00:00:00 &#43;0000</pubDate>
-    <author>Youhee</author>
-    <guid>http://youheekil.github.io/data-engineer-roadmap/</guid>
-    <description><![CDATA[Data Engineer Roadmap   The roadmap aims to give a complete picture of the modern data engineering landscape and serve as a study guide for aspiring data engineers.
- Based on the provided Data Engineer Roadmap, I would like to dig into what we need to know to be a data engineer.
-  Data Engineer Roadmap   Section 1. CS fundamentals  Basic terminal usage Data structures &amp; algorithms APIs REST Structured vs unstructured data Linux  CLI Vim Shell scripting Cronjobs   OS  How does the computer work?]]></description>
 </item>
 </channel>
 </rss>

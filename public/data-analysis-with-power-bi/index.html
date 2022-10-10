@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>RFM Analysis with SQL &amp; Power BI (DAX) - YOUHEE</title><meta name="Description" content=""><meta property="og:title" content="RFM Analysis with SQL &amp; Power BI (DAX)" />
+<meta property="og:description" content="What is RFM? RFM is a technique that can perform Customer Segmentation to determine customer&rsquo;s buying behavior. Company uses the RFM metric as a customer behavior segmentation indicator to improve marketing strategies for revenue increases by reactivating customers to more royal.
+  R(Recency) : The last time the customer made a purchase. The smaller the number, the better.
+  F(Frequency) : Number of transactions. The bigger the number, the better" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://youheekil.github.io/data-analysis-with-power-bi/" />
+<meta property="og:image" content="http://youheekil.github.io/logo.png"/>
+<meta property="article:published_time" content="2022-07-15T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-07-15T00:00:00+00:00" /><meta property="og:site_name" content="YOUHEE" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://youheekil.github.io/logo.png"/>
+
+<meta name="twitter:title" content="RFM Analysis with SQL &amp; Power BI (DAX)"/>
+<meta name="twitter:description" content="What is RFM? RFM is a technique that can perform Customer Segmentation to determine customer&rsquo;s buying behavior. Company uses the RFM metric as a customer behavior segmentation indicator to improve marketing strategies for revenue increases by reactivating customers to more royal.
+  R(Recency) : The last time the customer made a purchase. The smaller the number, the better.
+  F(Frequency) : Number of transactions. The bigger the number, the better"/>
+<meta name="application-name" content="YOUHEE">
+<meta name="apple-mobile-web-app-title" content="YOUHEE"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://youheekil.github.io/data-analysis-with-power-bi/" /><link rel="prev" href="http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/" /><link rel="next" href="http://youheekil.github.io/machine-learning-basic-math/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "RFM Analysis with SQL \u0026 Power BI (DAX)",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/youheekil.github.io\/data-analysis-with-power-bi\/"
+        },"genre": "posts","wordcount":  816 ,
+        "url": "http:\/\/youheekil.github.io\/data-analysis-with-power-bi\/","datePublished": "2022-07-15T00:00:00+00:00","dateModified": "2022-07-15T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "YOUHEE","logo": "http:\/\/youheekil.github.io\/favicon.ico"},"author": {
+                "@type": "Person",
+                "name": "Youhee"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="YOUHEE"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        data-srcset="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 1.5x, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 2x"
+        data-sizes="auto"
+        alt="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        title="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="YOUHEE"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        data-srcset="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 1.5x, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 2x"
+        data-sizes="auto"
+        alt="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        title="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">RFM Analysis with SQL &amp; Power BI (DAX)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Youhee</a></span>&nbsp;<span class="post-category">included in <a href="/categories/data-engineer/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Data Engineer</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-07-15">2022-07-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;816 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#what-is-rfm">What is RFM?</a></li>
+    <li><a href="#data-points-used-in-rfm-analysis">Data points used in RFM Analysis</a></li>
+    <li><a href="#understand-data-sql">Understand Data (SQL)</a></li>
+    <li><a href="#analysis">Analysis</a>
+      <ul>
+        <li><a href="#1-salse">1. Salse</a></li>
+        <li><a href="#2-best-month-for-sales-per-month">2. Best Month for sales per month</a></li>
+        <li><a href="#3-who-is-our-best-customer-this-could-be-answered-with-rfm">3. WHO IS OUR BEST CUSTOMER (this could be answered with RFM)</a></li>
+        <li><a href="#categorize-the-rfm">Categorize the RFM</a></li>
+        <li><a href="#create-temp-table">Create TEMP Table</a></li>
+        <li><a href="#what-products-codes-are-sold-together">What products codes are sold together?</a></li>
+        <li><a href="#power-bi-dax">Power BI DAX</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="what-is-rfm">What is RFM?</h2>
+<p><strong>RFM</strong> is a technique that can perform Customer Segmentation to determine customer&rsquo;s buying behavior.
+Company uses the RFM metric as a customer behavior segmentation indicator to improve marketing strategies for revenue increases by reactivating customers to more royal.</p>
+<ul>
+<li>
+<p>R(Recency) : The last time the customer made a purchase. The smaller the number, the better.</p>
+</li>
+<li>
+<p>F(Frequency) : Number of transactions. The bigger the number, the better</p>
+</li>
+<li>
+<p>M(Monetary) : The spending power of a customer. The bigger the number, the better.</p>
+</li>
+</ul>
+<hr>
+<h2 id="data-points-used-in-rfm-analysis">Data points used in RFM Analysis</h2>
+<ul>
+<li>Recency - last order date</li>
+<li>Frequency - count of total orders</li>
+<li>Monetary value - total spend</li>
+</ul>
+<h2 id="understand-data-sql">Understand Data (SQL)</h2>
+<ul>
+<li>Check the whole data</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> 
+<span class="k">FROM</span> <span class="n">sales_data</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Inspecting Data</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">status</span> <span class="k">FROM</span> <span class="n">sales_data</span> <span class="c1">-- NICE TO PLOT
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">year_id</span> <span class="k">FROM</span> <span class="n">sales_data</span>
+<span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">PRODUCTLINE</span> <span class="k">FROM</span> <span class="n">sales_data</span> <span class="c1">-- NICE TO PLOT 
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">COUNTRY</span> <span class="k">FROM</span> <span class="n">sales_data</span> <span class="c1">-- NICE TO PLOT
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">DEALSIZE</span> <span class="k">FROM</span> <span class="n">sales_data</span> <span class="c1">-- NICE TO PLOT
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">TERRITORY</span> <span class="k">FROM</span> <span class="n">sales_data</span> <span class="c1">-- NICE TO PLOT 
+</span><span class="c1"></span>
+<span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">MONTH_ID</span> <span class="k">FROM</span> <span class="n">sales_data</span>
+<span class="k">WHERE</span> <span class="n">year_id</span> <span class="o">=</span> <span class="mi">2003</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="analysis">Analysis</h2>
+<h3 id="1-salse">1. Salse</h3>
+<ul>
+<li><strong>By Product</strong></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">PRODUCTLINE</span><span class="p">,</span> <span class="k">SUM</span><span class="p">(</span><span class="n">sales</span><span class="p">)</span> <span class="k">AS</span> <span class="n">revenue</span>
+<span class="k">FROM</span> <span class="n">sales_data</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">PRODUCTLINE</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="mi">2</span> <span class="k">DESC</span><span class="p">;</span> 
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>By year</strong></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">YEAR_ID</span><span class="p">,</span> <span class="k">SUM</span><span class="p">(</span><span class="n">sales</span><span class="p">)</span> <span class="k">AS</span> <span class="n">revenue</span>
+<span class="k">FROM</span> <span class="n">sales_data</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">YEAR_ID</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="mi">2</span> <span class="k">DESC</span><span class="p">;</span> 
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>By Dealsize</strong></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">DEALSIZE</span><span class="p">,</span> <span class="k">SUM</span><span class="p">(</span><span class="n">sales</span><span class="p">)</span> <span class="k">AS</span> <span class="n">revenue</span>
+<span class="k">FROM</span> <span class="n">sales_data</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">DEALSIZE</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="mi">2</span> <span class="k">DESC</span><span class="p">;</span> 
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2-best-month-for-sales-per-month">2. Best Month for sales per month</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">MONTH_ID</span><span class="p">,</span> 
+      <span class="k">SUM</span><span class="p">(</span><span class="n">sales</span><span class="p">)</span> <span class="k">AS</span> <span class="n">Revenue</span><span class="p">,</span> 
+      <span class="k">COUNT</span><span class="p">(</span><span class="n">ORDERNUMBER</span><span class="p">)</span> <span class="k">AS</span> <span class="n">Frequency</span>
+<span class="k">FROM</span> <span class="n">sales_data</span>
+<span class="k">WHERE</span> <span class="n">YEAR_ID</span> <span class="o">=</span> <span class="mi">2003</span> <span class="c1">-- CAN CHANGE YEAR TO 2004
+</span><span class="c1"></span><span class="k">GROUP</span> <span class="k">BY</span> <span class="n">MONTH_ID</span> 
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">Revenue</span> <span class="k">DESC</span><span class="p">;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">MONTH_ID</span><span class="p">,</span> 
+      <span class="k">SUM</span><span class="p">(</span><span class="n">sales</span><span class="p">)</span> <span class="k">AS</span> <span class="n">Revenue</span><span class="p">,</span> 
+      <span class="k">COUNT</span><span class="p">(</span><span class="n">ORDERNUMBER</span><span class="p">)</span> <span class="k">AS</span> <span class="n">Frequency</span>
+<span class="k">FROM</span> <span class="n">sales_data</span>
+<span class="k">WHERE</span> <span class="n">YEAR_ID</span> <span class="o">=</span> <span class="mi">2003</span> <span class="k">AND</span> <span class="n">MONTH_ID</span> <span class="o">=</span> <span class="mi">11</span> <span class="c1">-- CAN CHANGE YEAR TO 2004
+</span><span class="c1"></span><span class="k">GROUP</span> <span class="k">BY</span> <span class="n">MONTH_ID</span><span class="p">,</span> <span class="n">PRODUCTLINE</span> 
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">Revenue</span> <span class="k">DESC</span><span class="p">;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3-who-is-our-best-customer-this-could-be-answered-with-rfm">3. WHO IS OUR BEST CUSTOMER (this could be answered with RFM)</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> 
+  <span class="n">CUSTOMERNAME</span><span class="p">,</span> 
+  <span class="k">SUM</span><span class="p">(</span><span class="n">sales</span><span class="p">)</span> <span class="k">AS</span> <span class="n">MonetaryValue</span><span class="p">,</span> 
+  <span class="k">AVG</span><span class="p">(</span><span class="n">sales</span><span class="p">)</span> <span class="k">AS</span> <span class="n">AvgMonetaryValue</span><span class="p">,</span> 
+  <span class="k">COUNT</span><span class="p">(</span><span class="n">ORDERNUMBER</span><span class="p">)</span> <span class="k">AS</span> <span class="n">Frequency</span><span class="p">,</span> 
+  <span class="k">MAX</span><span class="p">(</span><span class="n">ORDERDATE</span><span class="p">)</span> <span class="k">AS</span> <span class="n">last_order_date</span><span class="p">,</span> 
+  <span class="n">DATEDIFF</span><span class="p">(</span><span class="n">DD</span><span class="p">,</span> <span class="k">MAX</span><span class="p">(</span><span class="n">ORDERDATE</span><span class="p">),</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">MAX</span><span class="p">(</span><span class="n">ORDERDATE</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">sales_data</span> <span class="k">AS</span> <span class="n">max_order_date</span><span class="p">))</span> <span class="k">AS</span> <span class="n">Recency</span>
+<span class="k">FROM</span> <span class="n">sales_data</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">CUSTOMERNAME</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="categorize-the-rfm">Categorize the RFM</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">WITH</span> <span class="n">rfm</span> <span class="k">AS</span> <span class="p">(</span>
+  <span class="k">SELECT</span> 
+    <span class="n">CUSTOMERNAME</span><span class="p">,</span> 
+    <span class="k">SUM</span><span class="p">(</span><span class="n">sales</span><span class="p">)</span> <span class="k">AS</span> <span class="n">MonetaryValue</span><span class="p">,</span> 
+    <span class="k">AVG</span><span class="p">(</span><span class="n">sales</span><span class="p">)</span> <span class="k">AS</span> <span class="n">AvgMonetaryValue</span><span class="p">,</span> 
+    <span class="k">COUNT</span><span class="p">(</span><span class="n">ORDERNUMBER</span><span class="p">)</span> <span class="k">AS</span> <span class="n">Frequency</span><span class="p">,</span> 
+    <span class="k">MAX</span><span class="p">(</span><span class="n">ORDERDATE</span><span class="p">)</span> <span class="k">AS</span> <span class="n">last_order_date</span><span class="p">,</span> 
+    <span class="n">DATEDIFF</span><span class="p">(</span><span class="n">DD</span><span class="p">,</span> <span class="k">MAX</span><span class="p">(</span><span class="n">ORDERDATE</span><span class="p">),</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">MAX</span><span class="p">(</span><span class="n">ORDERDATE</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">sales_data</span> <span class="k">AS</span> <span class="n">max_order_date</span><span class="p">))</span> <span class="k">AS</span> <span class="n">Recency</span>
+  <span class="k">FROM</span> <span class="n">sales_data</span>
+  <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">CUSTOMERNAME</span>
+<span class="p">)</span>
+
+<span class="n">rfm_calc</span> <span class="k">AS</span> <span class="p">(</span>
+  <span class="k">SELECT</span> <span class="n">R</span><span class="p">.</span><span class="o">*</span><span class="p">,</span> 
+        <span class="n">NTILE</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">Recency</span><span class="p">)</span> <span class="n">rfm_recency</span><span class="p">,</span> 
+        <span class="n">NTILE</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">Frequency</span><span class="p">)</span> <span class="n">rfm_frequency</span><span class="p">,</span>
+        <span class="n">NTILE</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">AvgMonetaryValue</span><span class="p">)</span> <span class="n">rfm_monetary</span><span class="p">,</span>  
+  <span class="k">FROM</span> <span class="n">rfm</span> <span class="n">R</span>
+  <span class="k">ORDER</span> <span class="k">BY</span> <span class="mi">4</span> <span class="k">DESC</span>
+<span class="p">)</span>
+
+<span class="k">SELECT</span> 
+  <span class="k">C</span><span class="p">.</span><span class="o">*</span><span class="p">,</span> 
+  <span class="k">CAST</span><span class="p">(</span><span class="n">rfm_recency</span> <span class="k">AS</span> <span class="nb">VARCHAR</span><span class="p">)</span> <span class="o">+</span> <span class="k">CAST</span><span class="p">(</span><span class="n">rfm_frequency</span> <span class="k">AS</span> <span class="nb">VARCHAR</span><span class="p">)</span> <span class="o">+</span> <span class="k">CAST</span><span class="p">(</span><span class="n">rfm_monetary</span> <span class="k">AS</span> <span class="nb">VARCHAR</span><span class="p">)</span> <span class="k">AS</span> <span class="n">rfm_cell_string</span>
+<span class="k">FROM</span> <span class="n">rfm_calc</span> <span class="k">C</span>
+
+<span class="p">;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="create-temp-table">Create TEMP Table</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="o">#</span><span class="n">rfm</span> <span class="c1">--for global table ##rfm
+</span><span class="c1"></span>
+<span class="k">WITH</span> <span class="n">rfm</span> <span class="k">AS</span> <span class="p">(</span>
+  <span class="k">SELECT</span> 
+    <span class="n">CUSTOMERNAME</span><span class="p">,</span> 
+    <span class="k">SUM</span><span class="p">(</span><span class="n">sales</span><span class="p">)</span> <span class="k">AS</span> <span class="n">MonetaryValue</span><span class="p">,</span> 
+    <span class="k">AVG</span><span class="p">(</span><span class="n">sales</span><span class="p">)</span> <span class="k">AS</span> <span class="n">AvgMonetaryValue</span><span class="p">,</span> 
+    <span class="k">COUNT</span><span class="p">(</span><span class="n">ORDERNUMBER</span><span class="p">)</span> <span class="k">AS</span> <span class="n">Frequency</span><span class="p">,</span> 
+    <span class="k">MAX</span><span class="p">(</span><span class="n">ORDERDATE</span><span class="p">)</span> <span class="k">AS</span> <span class="n">last_order_date</span><span class="p">,</span> 
+    <span class="n">DATEDIFF</span><span class="p">(</span><span class="n">DD</span><span class="p">,</span> <span class="k">MAX</span><span class="p">(</span><span class="n">ORDERDATE</span><span class="p">),</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">MAX</span><span class="p">(</span><span class="n">ORDERDATE</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">sales_data</span> <span class="k">AS</span> <span class="n">max_order_date</span><span class="p">))</span> <span class="k">AS</span> <span class="n">Recency</span>
+  <span class="k">FROM</span> <span class="n">sales_data</span>
+  <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">CUSTOMERNAME</span>
+<span class="p">),</span>
+
+  <span class="n">rfm_calc</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span> <span class="n">R</span><span class="p">.</span><span class="o">*</span><span class="p">,</span> 
+          <span class="n">NTILE</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">Recency</span><span class="p">)</span> <span class="n">rfm_recency</span><span class="p">,</span> 
+          <span class="n">NTILE</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">Frequency</span><span class="p">)</span> <span class="n">rfm_frequency</span><span class="p">,</span>
+          <span class="n">NTILE</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">MonetaryValue</span><span class="p">)</span> <span class="n">rfm_monetary</span><span class="p">,</span>  
+    <span class="k">FROM</span> <span class="n">rfm</span> <span class="n">R</span>
+    <span class="k">ORDER</span> <span class="k">BY</span> <span class="mi">4</span> <span class="k">DESC</span>
+  <span class="p">)</span>
+
+<span class="k">SELECT</span> 
+  <span class="k">C</span><span class="p">.</span><span class="o">*</span><span class="p">,</span> 
+  <span class="k">CAST</span><span class="p">(</span><span class="n">rfm_recency</span> <span class="k">AS</span> <span class="nb">VARCHAR</span><span class="p">)</span> <span class="o">+</span> <span class="k">CAST</span><span class="p">(</span><span class="n">rfm_frequency</span> <span class="k">AS</span> <span class="nb">VARCHAR</span><span class="p">)</span> <span class="o">+</span> <span class="k">CAST</span><span class="p">(</span><span class="n">rfm_monetary</span> <span class="k">AS</span> <span class="nb">VARCHAR</span><span class="p">)</span> <span class="k">AS</span> <span class="n">rfm_cell_string</span>
+<span class="k">into</span> <span class="o">#</span><span class="n">rfm</span>
+<span class="k">FROM</span> <span class="n">rfm_calc</span> <span class="k">C</span>
+
+<span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">CUSTOMERNAME</span><span class="p">,</span> <span class="n">rfm_recency</span><span class="p">,</span> <span class="n">rfm_freqeuncy</span><span class="p">,</span> <span class="n">rfm_monetary</span><span class="p">,</span> 
+  <span class="k">CASE</span>
+   <span class="k">WHEN</span> <span class="n">rfm_cell_string</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">121</span><span class="p">,</span> <span class="mi">122</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="mi">132</span><span class="p">,</span> <span class="mi">211</span><span class="p">,</span> <span class="mi">212</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">141</span><span class="p">)</span> <span class="k">THEN</span> <span class="s1">&#39;lost_customers&#39;</span>
+   <span class="k">WHEN</span> <span class="n">rfm_cell_string</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">133</span><span class="p">,</span> <span class="mi">134</span><span class="p">,</span> <span class="mi">143</span><span class="p">,</span> <span class="mi">244</span><span class="p">,</span> <span class="mi">334</span><span class="p">,</span> <span class="mi">343</span><span class="p">,</span> <span class="mi">344</span><span class="p">)</span> <span class="k">THEN</span> <span class="s1">&#39;slipping away, cannot lose&#39;</span>
+   <span class="k">WHEN</span> <span class="n">rfm_cell_string</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">311</span><span class="p">,</span> <span class="mi">411</span><span class="p">,</span> <span class="mi">331</span><span class="p">)</span> <span class="k">THEN</span> <span class="s1">&#39;new_customers&#39;</span> 
+   <span class="k">WHEN</span> <span class="n">rfm_cell_string</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">222</span><span class="p">,</span> <span class="mi">223</span><span class="p">,</span> <span class="mi">233</span><span class="p">,</span> <span class="mi">322</span><span class="p">)</span> <span class="k">THEN</span> <span class="s1">&#39;potential churners&#39;</span>
+   <span class="k">WHEN</span> <span class="n">rfm_cell_string</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">323</span><span class="p">,</span> <span class="mi">333</span><span class="p">,</span> <span class="mi">321</span><span class="p">,</span> <span class="mi">422</span><span class="p">,</span> <span class="mi">332</span><span class="p">,</span> <span class="mi">432</span><span class="p">)</span> <span class="k">THEN</span> <span class="s1">&#39;active&#39;</span>
+   <span class="k">WHEN</span> <span class="n">rfm_cell_string</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">433</span><span class="p">,</span> <span class="mi">434</span><span class="p">,</span> <span class="mi">443</span><span class="p">,</span> <span class="mi">444</span><span class="p">)</span> <span class="k">THEN</span> <span class="s1">&#39;loyal&#39;</span>
+<span class="k">FROM</span> <span class="o">#</span><span class="n">rfm</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="what-products-codes-are-sold-together">What products codes are sold together?</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-SQL" data-lang="SQL"><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">ORDERNUMBER</span><span class="p">,</span> <span class="n">STUFF</span><span class="p">(</span>
+
+  <span class="p">(</span><span class="k">SELECT</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="n">PRODUCTCODE</span>
+  <span class="k">FROM</span> <span class="n">sales_data</span> <span class="n">P</span>
+  <span class="k">WHERE</span> <span class="n">ORDERNUMBER</span> <span class="k">IN</span> 
+    <span class="p">(</span>
+      <span class="k">SELECT</span> <span class="n">ORDERNUMBER</span>
+      <span class="k">FROM</span> <span class="p">(</span>
+        <span class="k">SELECT</span> <span class="n">ORDERNUMBER</span><span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="n">rn</span><span class="p">,</span> 
+        <span class="k">FROM</span> <span class="n">sales_data</span>
+        <span class="k">WHERE</span> <span class="n">STATUS</span><span class="o">=</span><span class="s1">&#39;Shipped&#39;</span>
+        <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">ORDERNUMBER</span>
+      <span class="p">)</span> <span class="n">m</span> 
+      <span class="k">where</span> <span class="n">rn</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1">-- CAN CHANGE THE NUMBER
+</span><span class="c1"></span>    <span class="p">)</span>
+    <span class="k">AND</span> <span class="n">p</span><span class="p">.</span><span class="n">ORDERNUMBER</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">ORDERNUMBER</span>
+    <span class="k">for</span> <span class="n">xml</span> <span class="n">path</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)),</span> 
+    <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="k">FROM</span> <span class="n">sales_data</span> <span class="n">S</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="mi">2</span> <span class="k">DESC</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="power-bi-dax">Power BI DAX</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Measures Table = 
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Recency = DATEDIFF(MAX(sales_data[ORDERDATE]), [Last_Purchase], DAY)
+
+
+AvgMonetaryValue = AVERAGE(sales_data[sales])
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-07-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/data-analysis-with-power-bi/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://youheekil.github.io/data-analysis-with-power-bi/" data-title="RFM Analysis with SQL &amp; Power BI (DAX)"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://youheekil.github.io/data-analysis-with-power-bi/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://youheekil.github.io/data-analysis-with-power-bi/" data-title="RFM Analysis with SQL &amp; Power BI (DAX)"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://youheekil.github.io/data-analysis-with-power-bi/" data-title="RFM Analysis with SQL &amp; Power BI (DAX)"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://youheekil.github.io/data-analysis-with-power-bi/" data-title="RFM Analysis with SQL &amp; Power BI (DAX)"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/project1-1.-starbucks-twitter-sentimental-analysis/" class="prev" rel="prev" title="[Starbucks Twitter Sentiment Analysis] Instructions and Spark NLP"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>[Starbucks Twitter Sentiment Analysis] Instructions and Spark NLP</a>
+            <a href="/machine-learning-basic-math/" class="next" rel="next" title="[Machine Learning] Basic Math for ML with Python">[Machine Learning] Basic Math for ML with Python<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.79.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Youhee Kil</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/twemoji/twemoji.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/index.umd.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"YOUHEE","id-2":"YOUHEE"},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"},"twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
