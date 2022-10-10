@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>[Machine Learning] Basic Math for ML with Python (Part 1) - YOUHEE</title><meta name="Description" content=""><meta property="og:title" content="[Machine Learning] Basic Math for ML with Python (Part 1)" />
+<meta property="og:description" content="Machine learning is nothing but a geometry problem ! All data is the same. Understanding geometry is very important to solve machine learning problems.
+ [Numpy] Basic Linear Algebra Linear algebra, mathematical discipline that deals with vectors and matrices and, more generally, with vector spaces and linear transformations (Britannica)
+In this lecture, you will learn
+ Scala, Vector, Array, Tensor Dot product &amp; Norm Multiplication &amp; Transpose &amp; Invertible matrix Linear Transformation Eigen Value &amp; Eigen Vector Cosine Similarity  and perform these with Numpy" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://youheekil.github.io/machine-learning-basic-math_pt1/" />
+<meta property="og:image" content="http://youheekil.github.io/logo.png"/>
+<meta property="article:published_time" content="2022-07-26T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-07-26T00:00:00+00:00" /><meta property="og:site_name" content="YOUHEE" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://youheekil.github.io/logo.png"/>
+
+<meta name="twitter:title" content="[Machine Learning] Basic Math for ML with Python (Part 1)"/>
+<meta name="twitter:description" content="Machine learning is nothing but a geometry problem ! All data is the same. Understanding geometry is very important to solve machine learning problems.
+ [Numpy] Basic Linear Algebra Linear algebra, mathematical discipline that deals with vectors and matrices and, more generally, with vector spaces and linear transformations (Britannica)
+In this lecture, you will learn
+ Scala, Vector, Array, Tensor Dot product &amp; Norm Multiplication &amp; Transpose &amp; Invertible matrix Linear Transformation Eigen Value &amp; Eigen Vector Cosine Similarity  and perform these with Numpy"/>
+<meta name="application-name" content="YOUHEE">
+<meta name="apple-mobile-web-app-title" content="YOUHEE"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://youheekil.github.io/machine-learning-basic-math_pt1/" /><link rel="prev" href="http://youheekil.github.io/data-analysis-with-power-bi/" /><link rel="next" href="http://youheekil.github.io/machine-learning-basic-math_pt2/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "[Machine Learning] Basic Math for ML with Python (Part 1)",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/youheekil.github.io\/machine-learning-basic-math_pt1\/"
+        },"genre": "posts","wordcount":  706 ,
+        "url": "http:\/\/youheekil.github.io\/machine-learning-basic-math_pt1\/","datePublished": "2022-07-26T00:00:00+00:00","dateModified": "2022-07-26T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "YOUHEE","logo": "http:\/\/youheekil.github.io\/favicon.ico"},"author": {
+                "@type": "Person",
+                "name": "Youhee"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="YOUHEE"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        data-srcset="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 1.5x, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 2x"
+        data-sizes="auto"
+        alt="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        title="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="YOUHEE"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        data-srcset="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 1.5x, https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80 2x"
+        data-sizes="auto"
+        alt="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80"
+        title="https://s.gravatar.com/avatar/83b05cfa42d6bfdbb37962fd78463398?s=80" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">[Machine Learning] Basic Math for ML with Python (Part 1)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Youhee</a></span>&nbsp;<span class="post-category">included in <a href="/categories/machine-learning/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Machine Learning</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-07-26">2022-07-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;706 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#numpy-basic-linear-algebra">[Numpy] Basic Linear Algebra</a>
+      <ul>
+        <li><a href="#1-scala-vector-matrix-tensor">1. Scala, Vector, Matrix, Tensor</a>
+          <ul>
+            <li><a href="#scala">Scala</a></li>
+            <li><a href="#vector">Vector</a></li>
+            <li><a href="#matrix">Matrix</a></li>
+            <li><a href="#tensor">Tensor</a></li>
+          </ul>
+        </li>
+        <li><a href="#2-dot-product--norm">2. Dot product &amp; Norm</a>
+          <ul>
+            <li><a href="#dot-product">Dot product</a></li>
+          </ul>
+        </li>
+        <li><a href="#3-multiplication--transpose--invertible-matrix">3. Multiplication &amp; Transpose &amp; Invertible matrix</a>
+          <ul>
+            <li><a href="#multiplication">Multiplication</a></li>
+            <li><a href="#transpose">Transpose</a></li>
+            <li><a href="#invertible-matrix">Invertible matrix</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><blockquote>
+<p>Machine learning is nothing but a geometry problem ! All data is the same. Understanding geometry is very important to solve machine learning problems.</p>
+</blockquote>
+<h2 id="numpy-basic-linear-algebra">[Numpy] Basic Linear Algebra</h2>
+<p><code>Linear algebra</code>, mathematical discipline that deals with <strong>vectors</strong> and <strong>matrices</strong> and, more generally, with <strong>vector spaces</strong> and <strong>linear transformations</strong>  (<a href="https://www.britannica.com/science/linear-algebra" target="_blank" rel="noopener noreffer">Britannica</a>)</p>
+<p>In this lecture, you will learn</p>
+<ol>
+<li><strong>Scala, Vector, Array, Tensor</strong></li>
+<li><strong>Dot product &amp; Norm</strong></li>
+<li><strong>Multiplication &amp; Transpose &amp; Invertible matrix</strong></li>
+<li>Linear Transformation</li>
+<li>Eigen Value &amp; Eigen Vector</li>
+<li>Cosine Similarity</li>
+</ol>
+<p>and perform these with <code>Numpy</code></p>
+<h3 id="1-scala-vector-matrix-tensor">1. Scala, Vector, Matrix, Tensor</h3>
+<h4 id="scala">Scala</h4>
+<ul>
+<li>A Scalar has only magnitude (size) and is like a number</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mf">0.25</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="vector">Vector</h4>
+<figure>
+    <img src="vector.png"/> <figcaption>
+            <h4>Vector</h4>
+        </figcaption>
+</figure>
+
+<ul>
+<li>A vector has <em>magnitude</em> and <em>direction</em> and is a list of numbers (can be in a row or column) which could present as $ \vec{p} = (1, 2, 3)$</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span> 
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="matrix">Matrix</h4>
+<ul>
+<li>A matrix is an array of numbers</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span> 
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> 
+              <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span> <span class="c1"># 2 X 3 matrix</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.14</span><span class="p">],</span> 
+              <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span> <span class="c1"># 2 X 4 matrix</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="tensor">Tensor</h4>
+<p>Assuming a basis of a real vector space, <em>e.g., a coordinate frame in the ambient space</em>,, a tensor can be represented as an organized <strong>multidimensional array</strong> of scalars (numerical values) with respect to this specific basis - <a href="https://en.wikipedia.org/wiki/Tensor" target="_blank" rel="noopener noreffer">wikipedia</a></p>
+<figure>
+    <img src="tensor.png"/> <figcaption>
+            <h4>Visualization of scalar, vector, array, and tensor</h4>
+        </figcaption>
+</figure>
+
+<h3 id="2-dot-product--norm">2. Dot product &amp; Norm</h3>
+<h4 id="dot-product">Dot product</h4>
+<p>Dot product equals to inner product which is the sum of the products of corresponding components. Numpy helps us calculate vector&rsquo;s inner product easily with <code>dot()</code> function.</p>
+<div class="details admonition note">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw" aria-hidden="true"></i>Inner Product Reference<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">Check <a href="https://mathworld.wolfram.com/InnerProduct.html" target="_blank" rel="noopener noreffer">Wolfram MathWorld page</a> to get a deeper understanding of inner product!</div>
+        </div>
+    </div>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span>  <span class="n">b</span><span class="p">))</span> <span class="c1"># inner product by using dot() </span>
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">))</span> <span class="c1"># inner product by using summation of multiplication</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The vector norm refers to the length of the vector. In machine learning, the most commonly used norms are $L^2$ Norm and $L^1$ Norm.</p>
+<ul>
+<li>
+<p><strong>$L^2$ Norm</strong></p>
+<p>$L^2$ is represented as $||\vec{x}||_2$.
+$$||\vec{x}||_2 = \sqrt{x_1^2 + x_2^2+ \cdot \cdot \cdot + x_n^2}  = \sqrt{\sum^n_k{x^2_k}}$$ where $k = 1&hellip;n$.</p>
+</li>
+<li>
+<p><strong>$L^1$ Norm</strong></p>
+<p>$L^1$ is represented as $||\vec{x}||_1$.
+$$||\vec{x}||_1 = |x_1| + |x_2| + &hellip; + |x_n| = \sum^n_k{|x_k|}$$.</p>
+</li>
+</ul>
+<p>In Numpy, Norm can be calculated by using <strong>linalg.norm()</strong> function.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="c1"># L2 Norm (default)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> 
+
+<span class="c1"># L1 Norm </span>
+<span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3-multiplication--transpose--invertible-matrix">3. Multiplication &amp; Transpose &amp; Invertible matrix</h3>
+<h4 id="multiplication">Multiplication</h4>
+<p>Numpy&rsquo;s <code>dot()</code> function can be used for matrix multiplication</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># a = 2 X 3</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> 
+            <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+<span class="c1"># b = 3 X 2 </span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> 
+            <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span> <span class="c1"># 2 x 2</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="transpose">Transpose</h4>
+<p>The transpose of a matrix is simply a flipped version of the original matrix. We can transpose a matrix by switching its rows with its columns.</p>
+<p>In numpy, implementing matrix transpose can be done by just adding <code>.T</code> at the end of the original matrix</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> 
+            <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="c1"># Transpose of a matrix A</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Multiplying  matrix A and transpose of a matrix A can be implemented as following:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> 
+            <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">T</span><span class="p">))</span> 
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="invertible-matrix">Invertible matrix</h4>
+<p>In linear algebra, an n-by-n square matrix is called invertible, if the product of the matrix and its inverse is the identity matrix (<a href="https://www.cuemath.com/algebra/invertible-matrix/" target="_blank" rel="noopener noreffer">CUEMATH</a>)</p>
+<p>$$ AB = BA = I_n$$
+$$\implies B = A^{-1}$$</p>
+<p>where,</p>
+<ul>
+<li>A is (n x n) invertible matrix</li>
+<li>B is (n x n) matrix called inverse of A</li>
+<li>$I_n$ is (n x n) identity matrix</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python">
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> 
+            <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">a</span><span class="p">))</span> <span class="c1"># case when Determinant (det(A)) is not zero -&gt; invertible matrix exists</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> 
+            <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">b</span><span class="p">))</span> <span class="c1"># case when Determinant (det(B)) is zero -&gt; invertible matrix doesn&#39;t exist</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Implement Invertible matrix</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> 
+            <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-07-26</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/machine-learning-basic-math_pt1/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://youheekil.github.io/machine-learning-basic-math_pt1/" data-title="[Machine Learning] Basic Math for ML with Python (Part 1)"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://youheekil.github.io/machine-learning-basic-math_pt1/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://youheekil.github.io/machine-learning-basic-math_pt1/" data-title="[Machine Learning] Basic Math for ML with Python (Part 1)"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://youheekil.github.io/machine-learning-basic-math_pt1/" data-title="[Machine Learning] Basic Math for ML with Python (Part 1)"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://youheekil.github.io/machine-learning-basic-math_pt1/" data-title="[Machine Learning] Basic Math for ML with Python (Part 1)"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/data-analysis-with-power-bi/" class="prev" rel="prev" title="RFM Analysis with SQL &amp; Power BI (DAX)"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>RFM Analysis with SQL &amp; Power BI (DAX)</a>
+            <a href="/machine-learning-basic-math_pt2/" class="next" rel="next" title="[Machine Learning] Basic Math for ML with Python">[Machine Learning] Basic Math for ML with Python<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.79.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Youhee Kil</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/twemoji/twemoji.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/plugins/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/index.umd.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"YOUHEE","id-2":"YOUHEE"},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"},"twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
