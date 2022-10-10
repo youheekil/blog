@@ -206,15 +206,6 @@ SELECT DISTINCT ORDERNUMBER, STUFF(
 FROM sales_data S
 ORDER BY 2 DESC
 ```
-### Power BI DAX
-``` 
-Measures Table = 
-```
-```
-Recency = DATEDIFF(MAX(sales_data[ORDERDATE]), [Last_Purchase], DAY)
 
-
-AvgMonetaryValue = AVERAGE(sales_data[sales])
-```
 
 

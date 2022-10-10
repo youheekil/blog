@@ -197,6 +197,8 @@ a = np.array([[1, 2],
 print(np.linalg.inv(a))
 ```
 
+--- working on it 
+
 ### 4. Linear Transformation 
 
 Linear Transformations are often used in machine learning applications. 
