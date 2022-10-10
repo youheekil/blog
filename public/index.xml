@@ -4,17 +4,9 @@
         <link>http://youheekil.github.io/</link>
         <description>YOUHEE</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>youhee.kil@gmail.com (Youhee Kil)</managingEditor>
-            <webMaster>youhee.kil@gmail.com (Youhee Kil)</webMaster><lastBuildDate>Sun, 11 Sep 2022 00:00:00 &#43;0000</lastBuildDate>
+            <webMaster>youhee.kil@gmail.com (Youhee Kil)</webMaster><lastBuildDate>Tue, 26 Jul 2022 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="http://youheekil.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>[System Design]</title>
-    <link>http://youheekil.github.io/system-design/</link>
-    <pubDate>Sun, 11 Sep 2022 00:00:00 &#43;0000</pubDate>
-    <author>Youhee</author>
-    <guid>http://youheekil.github.io/system-design/</guid>
-    <description><![CDATA[  Kafka with Docker   ]]></description>
-</item>
-<item>
     <title>[Machine Learning] Basic Math for ML with Python (Part 1)</title>
     <link>http://youheekil.github.io/machine-learning-basic-math_pt1/</link>
     <pubDate>Tue, 26 Jul 2022 00:00:00 &#43;0000</pubDate>
@@ -98,6 +90,15 @@ Step 1. Docker Image Setup Okay, first, let&rsquo;s create a directory folder to
     <guid>http://youheekil.github.io/project2-0.-songplz-bot/</guid>
     <description><![CDATA[SongPlz Bot - Architecture Planning 1. Aim The aim of this SongPlz Bot project (Slack Song Recommendation Bot) is to build a data pipeline to create a chatting bot for song recommendation with Serverless architecture which is a way to develop and run applications and services without managing infrastructure (AWS). If you are still unsure about serverless architecture, please click here.
 There are many cloud services available providing FaaS such as AWS Lambda, Azure Functions, and Google Cloud Function.]]></description>
+</item>
+<item>
+    <title>[Udacity] Data Streaming</title>
+    <link>http://youheekil.github.io/udacity-dataengineer-datastreaming/</link>
+    <pubDate>Thu, 19 May 2022 13:38:13 &#43;0900</pubDate>
+    <author>Youhee</author>
+    <guid>http://youheekil.github.io/udacity-dataengineer-datastreaming/</guid>
+    <description><![CDATA[Udacity Program   Kafka (figure)   Technologies used  Apache Kafka, Kafka Connect, KSQL, Faust Stream Processing, Spark Structured Streaming   About The Nanodegree Data Streaming skill was gained to be prepared for the next era of data engineering. Learned how to analyze data in real-time using Apache Kafka and Spark, and build applications to process live insights from data at scale.
+Program Details During the program, we completed two courses with two projects.]]></description>
 </item>
 </channel>
 </rss>

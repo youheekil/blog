@@ -2,21 +2,19 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>http://youheekil.github.io/system-design/</loc><lastmod>2022-09-11T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>http://youheekil.github.io/categories/</loc><lastmod>2022-09-11T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>http://youheekil.github.io/categories/data-engineer/</loc><lastmod>2022-09-11T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>http://youheekil.github.io/posts/</loc><lastmod>2022-09-11T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>http://youheekil.github.io/tags/system-design/</loc><lastmod>2022-09-11T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>http://youheekil.github.io/tags/</loc><lastmod>2022-09-11T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>http://youheekil.github.io/</loc><lastmod>2022-09-11T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
             <loc>http://youheekil.github.io/machine-learning-basic-math_pt1/</loc><lastmod>2022-07-26T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://youheekil.github.io/categories/</loc><lastmod>2022-07-26T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>http://youheekil.github.io/categories/machine-learning/</loc><lastmod>2022-07-26T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://youheekil.github.io/posts/</loc><lastmod>2022-07-26T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://youheekil.github.io/</loc><lastmod>2022-07-26T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>http://youheekil.github.io/data-analysis-with-power-bi/</loc><lastmod>2022-07-15T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://youheekil.github.io/categories/data-engineer/</loc><lastmod>2022-07-15T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>http://youheekil.github.io/project1-1.-starbucks-twitter-sentimental-analysis/</loc><lastmod>2022-06-08T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>http://youheekil.github.io/tags/kafka/</loc><lastmod>2022-06-08T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>http://youheekil.github.io/categories/project/</loc><lastmod>2022-06-08T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>http://youheekil.github.io/tags/sentiment-analysis/</loc><lastmod>2022-06-08T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>http://youheekil.github.io/tags/spark-streaming/</loc><lastmod>2022-06-08T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://youheekil.github.io/tags/</loc><lastmod>2022-06-08T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>http://youheekil.github.io/project1-0.-starbucks-twitter-sentimental-analysis/</loc><lastmod>2022-06-06T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>http://youheekil.github.io/categories/sentiment-analysis/</loc><lastmod>2022-06-06T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>http://youheekil.github.io/text-analysis/</loc><lastmod>2022-06-05T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
@@ -35,4 +33,5 @@
             <loc>http://youheekil.github.io/categories/data-engineer/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>http://youheekil.github.io/categories/machine-learning/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>http://youheekil.github.io/tags/python/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://youheekil.github.io/tags/system-design/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>http://youheekil.github.io/categories/udacity/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url></urlset>

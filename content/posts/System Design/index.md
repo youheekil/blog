@@ -1,7 +1,7 @@
 ---
 title: "[System Design]"
 date: 2022-09-11
-draft: false
+draft: true
 author: Youhee
 images: []
 tags: ["System-Design"]
