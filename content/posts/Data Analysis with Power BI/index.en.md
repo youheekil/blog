@@ -1,5 +1,5 @@
 ---
-title: "RFM Analysis with SQL & Power BI (DAX)"
+title: "[SQL] RFM Analysis with SQL"
 date: 2022-07-15
 draft: false
 author: Youhee

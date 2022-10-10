@@ -5,17 +5,6 @@
         <description>Machine Learning - Category - YOUHEE</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>youhee.kil@gmail.com (Youhee Kil)</managingEditor>
             <webMaster>youhee.kil@gmail.com (Youhee Kil)</webMaster><lastBuildDate>Tue, 26 Jul 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://youheekil.github.io/categories/machine-learning/" rel="self" type="application/rss+xml" /><item>
-    <title>[Machine Learning] Basic Math for ML with Python</title>
-    <link>http://youheekil.github.io/machine-learning-basic-math_pt2/</link>
-    <pubDate>Tue, 26 Jul 2022 00:00:00 &#43;0000</pubDate>
-    <author>Youhee</author>
-    <guid>http://youheekil.github.io/machine-learning-basic-math_pt2/</guid>
-    <description><![CDATA[Machine learning is nothing but a geometry problem ! All data is the same. Understanding geometry is very important to solve machine learning problems.
- [Numpy] Basic Linear Algebra Linear algebra, mathematical discipline that deals with vectors and matrices and, more generally, with vector spaces and linear transformations (Britannica)
-In this lecture, you will learn
- Scala, Vector, Array, Tensor Dot product &amp; Norm Multiplication &amp; Transpose &amp; Invertible matrix Linear Transformation Eigen Value &amp; Eigen Vector Cosine Similarity  and perform these with Numpy]]></description>
-</item>
-<item>
     <title>[Machine Learning] Basic Math for ML with Python (Part 1)</title>
     <link>http://youheekil.github.io/machine-learning-basic-math_pt1/</link>
     <pubDate>Tue, 26 Jul 2022 00:00:00 &#43;0000</pubDate>

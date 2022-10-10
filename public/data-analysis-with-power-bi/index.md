@@ -1,4 +1,4 @@
-# RFM Analysis with SQL & Power BI (DAX)
+# [SQL] RFM Analysis with SQL
 
 
 ## What is RFM?
